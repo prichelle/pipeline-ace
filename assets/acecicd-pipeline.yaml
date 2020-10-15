@@ -31,7 +31,7 @@ spec:
       inputs:
       - name: image
         resource: image
-      params:
+    params:
       - name: namespace
         value: ace
       - name: isReleaseName
