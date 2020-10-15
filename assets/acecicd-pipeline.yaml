@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: acecicd-pipeline
+spec:
+  resources:
+  - name: git-repo
+    type: git
+  - name: image
+    type: image
+  tasks:
+  - name: build-image
+    taskRef:
+      name: acecicd-build-t
+    resources:
+      inputs:
+      - name: source
+        resource: git-repo
+      outputs:
+      - name: image
+        resource: image
+    params:
+    - name: TLSVERIFY
+      value: "false"
+  - name: deploy-image
+    taskRef:
+      name: acecicd-deploy-t
+    runAfter:
+      - build-image
+    resources:
+      inputs:
+      - name: image
+        resource: image
+      params:
+      - name: namespace
+        value: ace
+      - name: isReleaseName
+        value: acecicd-is

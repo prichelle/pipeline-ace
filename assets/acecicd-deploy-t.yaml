@@ -1,0 +1,47 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: acecicd-deploy-t
+spec:
+  params:
+    - name: namespace
+      type: string
+      default: ace
+      description: release namespace
+    - name: isReleaseName
+      type: string
+      default: acecicd
+      description: name of the ace is name
+  resources:
+    inputs:
+    - name: image
+      type: image
+  steps:
+    - name: oc
+      image: quay.io/openshift/origin-cli:latest
+      script: |
+        cat << EOF | oc apply -f -
+        apiVersion: appconnect.ibm.com/v1beta1
+        kind: IntegrationServer
+        metadata:
+          name: ${isReleaseName}
+          namespace: ${namespace}
+        spec:
+          pod:
+           containers:
+             runtime:
+               image: $(resources.inputs.image.url)
+          configurations: []
+          designerFlowsOperationMode: disabled
+          license:
+            accept: true
+            license: L-AMYG-BQ2E4U
+            use: CloudPakForIntegrationNonProduction
+          replicas: 1
+          router:
+            timeout: 120s
+          service:
+            endpointType: http
+          useCommonServices: true
+          version: 11.0.0
+        EOF

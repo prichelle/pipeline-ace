@@ -1,0 +1,74 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: acecicd-build-t
+spec:
+  params:
+  - name: BUILDER_IMAGE
+    default: registry.redhat.io/rhel8/buildah
+    description: The location of the buildah builder image.
+    type: string
+  - name: DOCKERFILE
+    default: ./Dockerfile
+    description: Path to the Dockerfile to build.
+    type: string
+  - name: CONTEXT
+    default: .
+    description: Path to the directory to use as context.
+    type: string
+  - name: TLSVERIFY
+    default: "true"
+    description: Verify the TLS on the registry endpoint
+    type: string
+  - name: FORMAT
+    default: oci
+    description: The format of the built container, oci or docker
+    type: string
+  resources:
+    inputs:
+    - name: source
+      type: git
+    outputs:
+    - name: image
+      type: image
+  steps:
+  - command:
+    - buildah
+    - bud
+    - --storage-driver=vfs
+    - --format=$(params.FORMAT)
+    - --tls-verify=$(params.TLSVERIFY)
+    - --layers
+    - -f
+    - $(params.DOCKERFILE)
+    - -t
+    - $(resources.outputs.image.url)
+    - $(params.CONTEXT)
+    image: $(params.BUILDER_IMAGE)
+    name: build
+    resources: {}
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+    workingDir: /workspace/source
+  - command:
+    - buildah
+    - push
+    - --storage-driver=vfs
+    - --tls-verify=$(params.TLSVERIFY)
+    - $(resources.outputs.image.url)
+    - docker://$(resources.outputs.image.url)
+    image: $(params.BUILDER_IMAGE)
+    name: push
+    resources: {}
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+    workingDir: /workspace/source
+  volumes:
+  - emptyDir: {}
+    name: varlibcontainers
