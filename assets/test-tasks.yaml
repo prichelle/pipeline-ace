@@ -1,0 +1,37 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: test-task
+spec:
+  params:
+  - name: BUILDER_IMAGE
+    default: registry.redhat.io/rhel8/buildah
+    description: The location of the buildah builder image.
+    type: string
+  - name: DOCKERFILE
+    default: ./Dockerfile
+    description: Path to the Dockerfile to build.
+    type: string
+  - name: CONTEXT
+    default: .
+    description: Path to the directory to use as context.
+    type: string
+  resources:
+    inputs:
+    - name: source
+      type: git
+  steps:
+  - script: |
+      echo $(params.CONTEXT)
+    image: $(params.BUILDER_IMAGE)
+    name: build
+    resources: {}
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+    workingDir: /workspace/source
+  volumes:
+  - emptyDir: {}
+    name: varlibcontainers

@@ -86,3 +86,9 @@ TODO:
         value: $(uid)
 
 
+webhooks configruation
+https://www.openshift.com/blog/from-code-to-production-with-gitops
+
+https://github.com/IBM/tekton-tutorial
+
+https://github.com/containers/buildah/tree/master/docs

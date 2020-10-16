@@ -4,28 +4,29 @@ metadata:
   name: acecicd-deploy-t
 spec:
   params:
-    - name: namespace
-      type: string
-      default: ace
-      description: release namespace
-    - name: isReleaseName
-      type: string
-      default: acecicd
+    - default: acecicd
       description: name of the ace is name
+      name: isReleaseName
+      type: string
+    - default: ace
+      description: release namespace
+      name: namespace
+      type: string
   resources:
     inputs:
-    - name: image
-      type: image
+      - name: image
+        type: image
   steps:
-    - name: oc
-      image: quay.io/openshift/origin-cli:latest
+    - image: 'quay.io/openshift/origin-cli:latest'
+      name: oc
+      resources: {}
       script: |
         cat << EOF | oc apply -f -
         apiVersion: appconnect.ibm.com/v1beta1
         kind: IntegrationServer
         metadata:
-          name: ${isReleaseName}
-          namespace: ${namespace}
+          name: $(params.isReleaseName)
+          namespace: $(params.namespace)
         spec:
           pod:
            containers:
@@ -35,7 +36,7 @@ spec:
           designerFlowsOperationMode: disabled
           license:
             accept: true
-            license: L-AMYG-BQ2E4U
+            license: L-APEH-BPUCJK
             use: CloudPakForIntegrationNonProduction
           replicas: 1
           router:
@@ -43,5 +44,5 @@ spec:
           service:
             endpointType: http
           useCommonServices: true
-          version: 11.0.0
+          version: 11.0.0.10-r1
         EOF

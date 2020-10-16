@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: test-pipeline
+spec:
+  resources:
+  - name: git-repo
+    type: git
+  tasks:
+  - name: test
+    taskRef:
+      name: test-task
+    params:
+    - name: CONTEXT
+      value: $(metadata.uid)  
+    resources:
+      inputs:
+      - name: source
+        resource: git-repo

@@ -32,7 +32,7 @@ spec:
       - name: image
         resource: image
     params:
-      - name: namespace
-        value: ace
-      - name: isReleaseName
-        value: acecicd-is
+    - name: namespace
+      value: ace
+    - name: isReleaseName
+      value: acecicd-is

@@ -32,18 +32,13 @@ spec:
     - name: image
       type: image
   steps:
-  - command:
-    - buildah
-    - bud
-    - --storage-driver=vfs
-    - --format=$(params.FORMAT)
-    - --tls-verify=$(params.TLSVERIFY)
-    - --layers
-    - -f
-    - $(params.DOCKERFILE)
-    - -t
-    - $(resources.outputs.image.url)
-    - $(params.CONTEXT)
+  - script: |
+      . ./bars/acecfg
+      buildah bud --storage-driver=vfs --format=$(params.FORMAT) --tls-verify=$(params.TLSVERIFY) --layers \
+        -f $(params.DOCKERFILE) \
+        -t $(resources.outputs.image.url)/{{imgname}}:{{imgtag}} \
+        $(params.CONTEXT)
+      
     image: $(params.BUILDER_IMAGE)
     name: build
     resources: {}
