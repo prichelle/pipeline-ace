@@ -11,12 +11,11 @@ spec:
   tasks:
   - name: build-image
     taskRef:
-      name: acecicd-build-t
+      name: task-dockerf-build-push
     resources:
       inputs:
       - name: source
         resource: git-repo
-      outputs:
       - name: image
         resource: image
     params:
@@ -24,7 +23,7 @@ spec:
       value: "false"
   - name: deploy-image
     taskRef:
-      name: acecicd-deploy-t
+      name: task-deploy-aceimg
     runAfter:
       - build-image
     resources:
@@ -34,5 +33,7 @@ spec:
     params:
     - name: namespace
       value: ace
-    - name: isReleaseName
-      value: acecicd-is
+    - name: image_name
+      value: $(tasks.build-image.results.image_name)
+    - name: image_tag
+      value: $(tasks.build-image.results.image_tag)

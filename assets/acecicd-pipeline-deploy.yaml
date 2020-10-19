@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: acecicd-pipeline-deploy
+spec:
+  resources:
+  - name: git-repo
+    type: git
+  - name: image
+    type: image
+  tasks:
+  - name: deploy-image
+    taskRef:
+      name: task-deploy-aceimg
+    resources:
+      inputs:
+      - name: image
+        resource: image
+    params:
+    - name: namespace
+      value: ace
+    - name: image_name
+      value: ace-demo
+    - name: image_tag
+      value: '1.0'

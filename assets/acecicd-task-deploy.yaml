@@ -1,17 +1,20 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: acecicd-deploy-t
+  name: task-deploy-aceimg
 spec:
   params:
-    - default: acecicd
-      description: name of the ace is name
-      name: isReleaseName
-      type: string
     - default: ace
       description: release namespace
       name: namespace
       type: string
+    - name: image_tag
+      description: image tag name
+    - name: image_name
+      description: image name
+    - name: license
+      description: license number
+      default: L-APEH-BPUCJK
   resources:
     inputs:
       - name: image
@@ -21,22 +24,22 @@ spec:
       name: oc
       resources: {}
       script: |
-        cat << EOF | oc apply -f -
+        cat << EOF > integrationserver.yaml
         apiVersion: appconnect.ibm.com/v1beta1
         kind: IntegrationServer
         metadata:
-          name: $(params.isReleaseName)
+          name: $(params.image_name)
           namespace: $(params.namespace)
         spec:
           pod:
            containers:
              runtime:
-               image: $(resources.inputs.image.url)
+               image: $(resources.inputs.image.url)/$(params.image_name):$(params.image_tag)
           configurations: []
           designerFlowsOperationMode: disabled
           license:
             accept: true
-            license: L-APEH-BPUCJK
+            license: $(params.license)
             use: CloudPakForIntegrationNonProduction
           replicas: 1
           router:
@@ -46,3 +49,5 @@ spec:
           useCommonServices: true
           version: 11.0.0.10-r1
         EOF
+        cat integrationserver.yaml
+        oc apply -f integrationserver.yaml
