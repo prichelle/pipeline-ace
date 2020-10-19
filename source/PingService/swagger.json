@@ -1,0 +1,48 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "PingService",
+    "version" : "1.0.0",
+    "description" : "PingService"
+  },
+  "paths" : {
+    "/ping" : {
+      "get" : {
+        "operationId" : "ping",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "$ref" : "#/definitions/Ping"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Ping server"
+      }
+    }
+  },
+  "basePath" : "/ace/",
+  "definitions" : {
+    "Ping" : {
+      "type" : "object",
+      "properties" : {
+        "server" : {
+          "type" : "string"
+        },
+        "workPath" : {
+          "type" : "string"
+        },
+        "msgFlow" : {
+          "type" : "string"
+        },
+        "sourceVersion" : {
+          "type" : "string"
+        },
+        "dateTime" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

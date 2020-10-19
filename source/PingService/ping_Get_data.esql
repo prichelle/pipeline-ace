@@ -1,0 +1,14 @@
+
+
+CREATE COMPUTE MODULE ping_Get_data
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		SET OutputRoot = InputRoot;
+		SET OutputRoot.JSON.Data.Ping.sourceVersion = '1.0';
+    	SET OutputRoot.JSON.Data.Ping.server = ExecutionGroupLabel;
+    	SET OutputRoot.JSON.Data.Ping.workPath = WorkPath;
+    	SET OutputRoot.JSON.Data.Ping.msgFlow = MessageFlowLabel;
+    	SET OutputRoot.JSON.Data.Ping.dateTime = CURRENT_TIMESTAMP;
+		RETURN TRUE;
+	END;
+END MODULE;
