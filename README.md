@@ -45,25 +45,40 @@ oc apply -f <resource.yaml>
 - A kubernetes cluster with AppConnect Operator installed. The operator will create the required k8s objects based on the integrationserver CR defined by the deploy task. 
 - Cloud Pak for Integration. The current deploy task creates an IntegrationServer CR that expects to have the Cloud Pak for Integration installed (license type, common services, operational dashboard). For kubernetes environment without the CP4I, the deploy task needs to be modified by changing the  IntegrationServer custom resource.
 
-## Pipeline
+## Tekton objects
+
+### pipeline
+
 The pipeline is using two pipelineresources and two tasks.
 The pipelineresources are used to provide input to the tasks.
 
+Configuration provided by the file "acecicd-pipeline.yaml".
+Name: acecicd-pipeline
+
+> The **params.namespace** can be modified according to your deployment
+This is the namespace used to build the image url (registry/namespace/imageName:imageTag) and it is also used to define where the integration server will be deployed.
+> The **Tasks.deploy-image.params.integrationServerName** can be modified if a specific integration server name has to be set. By default it is set to the image name.
+
+Another pipeline is provided to deploy an existing image in the registry.
+Configuration provided by the file "acecicd-pipeline-deploy.yaml".
+> Note that you would had to provide the params of the pipeline in order to use it.
+
 ### pipelineresources
-*Git resource*
+#### Git resource
 Configuration provided by the file "acecicd-res-git.yaml".
 The resource is used to define the git repository location.
 > You need to update the git url $(params.url) according to your repository url.
 
 The pipeline is defined by "acecicd-pipeline.yaml".
 
-*Image resource*
+#### Image resource
+
 Configuration provided by the file "acecicd-res-image.yaml".
 The resource is used to define the image location.
 It uses the standard registry url.
 
 ### tasks
-*build*
+#### build
 
 Configuration provided by the file "acecicd-task-build.yaml".
 The required properties can be configured at the pipeline level.
@@ -78,7 +93,8 @@ The image is then pushed to the registry.
 
 The tasks is generating two results from the imgcfg file: the image_tag and image_version.
 
-*deploy*
+#### deploy 
+
 Configuration provided by the file "acecicd-task-deploy.yaml".
 The required properties can be configured at the pipeline level.
 
@@ -92,29 +108,8 @@ The image name and tag is provided by the task build from the imgcfg file.
 Please note the following for the integration server custom resource that is created:
 - The version used to run the integration serveer has to be fully qualified
 - The image used to build the custom image is __ibmcom/ace-server:latest__ which is made for use with **AppConnect Operator**
-- 
 
-- The image is referenced with the field 
-Integration Server custom resource created:
-TODO
-- image name fully qualified
-- custom image
-- license version
-
-
-### pipeline
-Configuration provided by the file "acecicd-pipeline.yaml".
-Name: acecicd-pipeline
-
-> The **params.namespace** can be modified according to your deployment
-This is the namespace used to build the image url (registry/namespace/imageName:imageTag) and it is also used to define where the integration server will be deployed.
-> The **Tasks.deploy-image.params.integrationServerName** can be modified if a specific integration server name has to be set. By default it is set to the image name.
-
-Another pipeline is provided to deploy an existing image in the registry.
-Configuration provided by the file "acecicd-pipeline-deploy.yaml".
-> Note that you would had to provide the params of the pipeline in order to use it.
-
-## Trigger
+### Trigger
 The pipeline can be triggered using a github webhook.
 The trigger configuration is provided by the file **trigger-template.yaml**.
 
@@ -135,7 +130,13 @@ The configuration defines three k8s objects:
   ```
 - Copy your integration server project (directory with the content of your toolkit project) into the git source directory (or use the provided one "PingService")  
 - Change the DockerFile according to your project directory that you have copied. Replace PingService by the name of your project directory
+- Adapt the **imgcfg** file to reflect the image name and tag that you would like to use.
 - Push your update to git
 - Pipeline is triggered
 - When the ace server has been started, it should be registered in the dashboard.
 - Navigate to the REST API and performs a http get
+
+## new version deployment
+- Change the ESQL file *ping_Get_data.esql* located under ./source/pingService. You can for example set a new version for **OutputRoot.JSON.Data.Ping.sourceVersion**
+- Set a new image version in the imgcfg if you would like to have another image deployed in the registry (otherwise it will be overwritten)
+- push your changes to git
