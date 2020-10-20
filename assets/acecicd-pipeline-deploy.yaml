@@ -3,9 +3,17 @@ kind: Pipeline
 metadata:
   name: acecicd-pipeline-deploy
 spec:
+  params:
+  - name: namespace
+    default: ace
+    description: name of the namespace to deploy and to build image url
+  - name: image_name
+    default: ace-demo
+    description: name of the image in the registry
+  - name: image_tag
+    default: '1.0'
+    description: image tag in the registry
   resources:
-  - name: git-repo
-    type: git
   - name: image
     type: image
   tasks:
@@ -18,8 +26,10 @@ spec:
         resource: image
     params:
     - name: namespace
-      value: ace
+      value: $(params.namespace)
     - name: image_name
-      value: ace-demo
+      value: $(params.image_name)
     - name: image_tag
-      value: '1.0'
+      value: $(params.image_tag)
+    - name: integrationServerName
+      value: "$(params.image_name)-$(params.image_tag)"

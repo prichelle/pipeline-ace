@@ -8,6 +8,8 @@ spec:
       description: release namespace
       name: namespace
       type: string
+    - name: integrationServerName
+      description: name of the integration server
     - name: image_tag
       description: image tag name
     - name: image_name
@@ -15,6 +17,15 @@ spec:
     - name: license
       description: license number
       default: L-APEH-BPUCJK
+    - name: tracing_ns
+      default: tracing
+      description: namespace where OD is installed
+    - name: tracing_enabled
+      default: "true"
+      description: enable tracing
+    - name: ace_version
+      default: 11.0.0.10-r1
+      description: fully qualified ace version
   resources:
     inputs:
       - name: image
@@ -28,13 +39,13 @@ spec:
         apiVersion: appconnect.ibm.com/v1beta1
         kind: IntegrationServer
         metadata:
-          name: $(params.image_name)
+          name: $(params.integrationServerName)
           namespace: $(params.namespace)
         spec:
           pod:
            containers:
              runtime:
-               image: $(resources.inputs.image.url)/$(params.image_name):$(params.image_tag)
+               image: $(resources.inputs.image.url)/$(params.namespace)/$(params.image_name):$(params.image_tag)
           configurations: []
           designerFlowsOperationMode: disabled
           license:
@@ -47,7 +58,10 @@ spec:
           service:
             endpointType: http
           useCommonServices: true
-          version: 11.0.0.10-r1
+          tracing:
+            enabled: $(params.tracing_enabled)
+            namespace: $(params.tracing_ns)
+          version: $(params.ace_version)
         EOF
         cat integrationserver.yaml
         oc apply -f integrationserver.yaml

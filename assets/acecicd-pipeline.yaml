@@ -8,6 +8,10 @@ spec:
     type: git
   - name: image
     type: image
+  params:
+  - name: namespace
+    default: ace
+    description: namespace used to publish the integration server
   tasks:
   - name: build-image
     taskRef:
@@ -19,8 +23,8 @@ spec:
       - name: image
         resource: image
     params:
-    - name: TLSVERIFY
-      value: "false"
+    - name: namespace
+      value: $(params.namespace)
   - name: deploy-image
     taskRef:
       name: task-deploy-aceimg
@@ -32,7 +36,9 @@ spec:
         resource: image
     params:
     - name: namespace
-      value: ace
+      value: $(params.namespace)
+    - name: integrationServerName
+      value: $(tasks.build-image.results.image_name)
     - name: image_name
       value: $(tasks.build-image.results.image_name)
     - name: image_tag
