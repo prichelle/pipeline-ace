@@ -51,7 +51,7 @@ spec:
         . ./imgcfg
         buildah push --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) \
           $(resources.inputs.image.url)/$(params.namespace)/$imgname:$imgtag \
-          'docker://$(resources.inputs.image.url)/'$imgname:$imgtag
+          'docker://$(resources.inputs.image.url)/$(params.namespace)/'$imgname:$imgtag
         echo -n $imgtag > /tekton/results/image_tag
         echo -n $imgname > /tekton/results/image_name
       image: $(params.BUILDER_IMAGE)
