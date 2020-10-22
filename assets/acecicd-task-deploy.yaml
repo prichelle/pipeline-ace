@@ -35,11 +35,12 @@ spec:
       name: oc
       resources: {}
       script: |
+        ISNAME=$(echo "$(params.integrationServerName)" | tr -d .)
         cat << EOF > integrationserver.yaml
         apiVersion: appconnect.ibm.com/v1beta1
         kind: IntegrationServer
         metadata:
-          name: $(params.integrationServerName)
+          name: $ISNAME
           namespace: $(params.namespace)
         spec:
           pod:

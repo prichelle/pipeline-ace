@@ -56,10 +56,12 @@ Configuration provided by the file "acecicd-pipeline.yaml".
 Name: acecicd-pipeline
 
 ```diff
-+ The **params.namespace** can be modified according to your deployment
-This is the namespace used to build the image url (registry/namespace/imageName:imageTag) and it is also used to define where the integration server will be deployed.
-# The **Tasks.deploy-image.params.integrationServerName** can be modified if a specific integration server name has to be set. By default it is set to the image name.
++ The **params.namespace** can be modified according to your deployment.
 ```
+
+This is the namespace used to build the image url (registry/namespace/imageName:imageTag) and it is also used to define where the integration server will be deployed.
+
+> The **Tasks.deploy-image.params.integrationServerName** can be modified if a specific integration server name has to be set. By default it is set to the image name.
 
 Another pipeline is provided to deploy an existing image in the registry.
 Configuration provided by the file "acecicd-pipeline-deploy.yaml".
