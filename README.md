@@ -90,15 +90,16 @@ It uses the standard registry url.
 Configuration provided by the file "acecicd-task-build.yaml".
 The required properties can be configured at the pipeline level.
 
-The task is building the ACE image with the **buildah** using a docker file.
+The task is building the ACE image with the **buildah** build solution using a docker file. The image used to run the container is __registry.redhat.io/rhel8/buildah__.
+
 By default **DockerFile** is used but it can be overriden using the DOKERFILE parameter.
-The image used to run the container is __registry.redhat.io/rhel8/buildah__.
-The build image url is __image-pipeline-reesource/namespace/imgcfg-name:imgcfg-version__
-The image name and version used for the registry url are computed from the imgcfg file available in the git root directory (same level as the docker file).
 
-The image is then pushed to the registry.
+The build image url used to push the generated image is __image-pipeline-reesource/namespace/imgcfg-name:imgcfg-version__ and it is pushed to the registry.
+ - The image name and version used for the registry url are computed from the **imgcfg** file available in the git root directory (same level as the docker file).
 
-The tasks is generating two results from the imgcfg file: the image_tag and image_version.
+The tasks is generating two *results* from the **imgcfg** file. These results are used by the next tag to recompose the image url.
+  - image_tag 
+  - image_version
 
 #### deploy 
 
