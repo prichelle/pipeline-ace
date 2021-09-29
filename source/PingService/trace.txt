@@ -1,0 +1,274 @@
+2021-09-28 15:25:42.0825 main........... i: IBM Integration API - Basic Information:
+System CLASSPATH = /Applications/IBM App Connect Enterprise.app/Contents/mqsi/server/messages:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/classes:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/server/classes:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/jnr-x86asm-1.0.2.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/jnr-unixsocket-0.23.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/jnr-posix-3.0.50.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/jnr-ffi-2.1.10.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/jnr-enxio-0.21.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/jnr-constants-0.9.12.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/jnr-a64asm-1.0.0.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/jffi-1.2.19-native.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/jffi-1.2.19.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jnr/lib/asm-7.0.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jackson/lib/snakeyaml-1.28.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jackson/lib/jackson-datatype-jsr310-2.12.3.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jackson/lib/jackson-dataformat-yaml-2.12.3.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jackson/lib/jackson-core-2.12.3.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jackson/lib/jackson-databind-2.12.3.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/jackson/lib/jackson-annotations-2.12.3.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/common/classes/IntegrationAPI.jar:/Applications/IBM App Connect Enterprise.app/Contents/mqsi/server/classes/brokerutil.jar:/Users/prichelle/aceconfig/common/wsrr
+System OS Name = Mac OS X
+System OS Architecture = x86_64
+System OS Version = 10.16
+System JRE Version = 1.8.0_281
+System JRE Vendor = Oracle Corporation
+IBM Integration API Version = 110
+com.ibm.broker.config.proxy.BrokerProxy loaded from file:/Applications/IBM%20App%20Connect%20Enterprise.app/Contents/mqsi/common/classes/IntegrationAPI.jar!/com/ibm/broker/config/proxy/BrokerProxy.class
+com.ibm.broker.config.common.UUIDHelper loaded from file:/Applications/IBM%20App%20Connect%20Enterprise.app/Contents/mqsi/common/classes/IntegrationAPI.jar!/com/ibm/broker/config/common/UUIDHelper.class
+com.ibm.broker.config.util.ParameterList loaded from file:/Applications/IBM%20App%20Connect%20Enterprise.app/Contents/mqsi/server/classes/brokerutil.jar!/com/ibm/broker/config/util/ParameterList.class
+com.ibm.mq.MQEnvironment not found in CLASSPATH.
+java.lang.System loaded from file:/Applications/IBM%20App%20Connect%20Enterprise.app/Contents/mqsi/common/jdk/jre/lib/rt.jar!/java/lang/System.class
+2021-09-28 15:25:42.0835 main........... { com.ibm.broker.config.proxy.LogEntry.getLogEntryFromString(encodedData=1138<<<<<<mqsiapplybaroverrides)
+2021-09-28 15:25:42.0836 main...........   { com.ibm.broker.config.proxy.LogEntry.getMessageNumber(bipNumber=1138)
+2021-09-28 15:25:42.0836 main...........     { com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue(bipNumber=1138)
+2021-09-28 15:25:42.0836 main...........       { com.ibm.broker.config.proxy.LogEntry.attemptToLoadResourceBundleFromDynamicLoader()
+2021-09-28 15:25:42.0837 main...........         { com.ibm.broker.config.proxy.DynamicResourceBundleLoader.getResourceBundle()
+2021-09-28 15:25:42.0837 main...........         } com.ibm.broker.config.proxy.DynamicResourceBundleLoader.getResourceBundle()
+2021-09-28 15:25:42.0837 main...........       } com.ibm.broker.config.proxy.LogEntry.attemptToLoadResourceBundleFromDynamicLoader() retVal=null
+2021-09-28 15:25:42.0837 main...........       d[2]: Attempting to load resource bundle from CLASSPATH...
+2021-09-28 15:25:42.0879 main...........     } com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue()
+2021-09-28 15:25:42.0879 main...........   } com.ibm.broker.config.proxy.LogEntry.getMessageNumber() retVal=BIP1138I
+2021-09-28 15:25:42.0879 main...........   { com.ibm.broker.config.proxy.LogEntry.getLocalisedMessageDetail(bipNumber=1138, inserts=[mqsiapplybaroverrides])
+2021-09-28 15:25:42.0880 main...........     { com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue(bipNumber=1138)
+2021-09-28 15:25:42.0880 main...........     } com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue()
+2021-09-28 15:25:42.0880 main...........     { com.ibm.broker.config.proxy.LogEntry.insertInserts()
+2021-09-28 15:25:42.0881 main...........     } com.ibm.broker.config.proxy.LogEntry.insertInserts()
+2021-09-28 15:25:42.0881 main...........   } com.ibm.broker.config.proxy.LogEntry.getLocalisedMessageDetail()
+2021-09-28 15:25:42.0881 main...........   { com.ibm.broker.config.proxy.LogEntry.getTimestamp()
+2021-09-28 15:25:42.0881 main...........   } com.ibm.broker.config.proxy.LogEntry.getTimestamp() retVal=null
+2021-09-28 15:25:42.0882 main...........   d[1]: new LogEntry() : {message=BIP1138I, detail=BIP1138I: Applying overrides using runtime mqsiapplybaroverrides..., source=, timestamp=null}
+2021-09-28 15:25:42.0882 main...........   d[1]: new LogEntry() inserts = [mqsiapplybaroverrides]
+2021-09-28 15:25:42.0882 main........... } com.ibm.broker.config.proxy.LogEntry.getLogEntryFromString()
+2021-09-28 15:25:42.0884 main........... { com.ibm.broker.config.proxy.BarFile.loadBarFile(pathAndFileName=../../../../toolkit_v12/GeneratedBarFiles/PingServiceproject.generated.bar)
+2021-09-28 15:25:42.0884 main...........   { com.ibm.broker.config.proxy.BarFile.<init>(pathAndFileName=../../../../toolkit_v12/GeneratedBarFiles/PingServiceproject.generated.bar)
+2021-09-28 15:25:42.0885 main...........     { com.ibm.broker.config.proxy.BarFile.parseBarFile()
+2021-09-28 15:25:42.0886 main...........       { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0887 main...........       } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0888 main...........       { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0889 main...........       } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0889 main...........       { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0889 main...........       } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0889 main...........       { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0890 main...........       } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0890 main...........       { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0897 main...........       } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0897 main...........     } com.ibm.broker.config.proxy.BarFile.parseBarFile()
+2021-09-28 15:25:42.0898 main...........   } com.ibm.broker.config.proxy.BarFile.<init>()
+2021-09-28 15:25:42.0898 main........... } com.ibm.broker.config.proxy.BarFile.loadBarFile() BarFile=name[../../../../toolkit_v12/GeneratedBarFiles/PingServiceproject.generated.bar];numberOfDeployableEntries[1];deploymentDescriptor[null];
+2021-09-28 15:25:42.0898 main........... { com.ibm.broker.config.proxy.BarFile.loadBarFile(pathAndFileName=./PingService.properties)
+2021-09-28 15:25:42.0898 main...........   { com.ibm.broker.config.proxy.BarFile.<init>(pathAndFileName=./PingService.properties)
+2021-09-28 15:25:42.0899 main...........   } com.ibm.broker.config.proxy.BarFile.<init>()
+2021-09-28 15:25:42.0902 main...........   com.ibm.broker.config.proxy.BarFile.loadBarFile() threw an exception: error in opening zip file. Stack trace follows.
+java.util.zip.ZipException: error in opening zip file
+	at java.util.zip.ZipFile.open(Native Method)
+	at java.util.zip.ZipFile.<init>(ZipFile.java:225)
+	at java.util.zip.ZipFile.<init>(ZipFile.java:155)
+	at java.util.zip.ZipFile.<init>(ZipFile.java:126)
+	at com.ibm.broker.config.proxy.BarFile.<init>(BarFile.java:205)
+	at com.ibm.broker.config.proxy.BarFile.loadBarFile(BarFile.java:269)
+	at com.ibm.broker.config.util.ApplyBarOverride.applyOverridesFromFile(ApplyBarOverride.java:263)
+	at com.ibm.broker.config.util.ApplyBarOverride.runCommand(ApplyBarOverride.java:142)
+	at com.ibm.broker.config.util.ApplyBarOverride.execute(ApplyBarOverride.java:472)
+	at com.ibm.broker.config.util.ApplyBarOverride.main(ApplyBarOverride.java:502)
+
+2021-09-28 15:25:42.0903 main........... } com.ibm.broker.config.proxy.BarFile.loadBarFile() BarFile=null
+2021-09-28 15:25:42.0904 main........... { com.ibm.broker.config.proxy.DeploymentDescriptor.<init>(fileName=./PingService.properties)
+2021-09-28 15:25:42.0928 main...........   com.ibm.broker.config.proxy.DeploymentDescriptor.<init>() threw an exception: Content is not allowed in prolog.. Stack trace follows.
+org.xml.sax.SAXParseException: Content is not allowed in prolog.
+	at org.apache.xerces.parsers.DOMParser.parse(Unknown Source)
+	at org.apache.xerces.jaxp.DocumentBuilderImpl.parse(Unknown Source)
+	at javax.xml.parsers.DocumentBuilder.parse(Unknown Source)
+	at com.ibm.broker.config.common.XMLHelper.parse(XMLHelper.java:115)
+	at com.ibm.broker.config.proxy.DeploymentDescriptor.<init>(DeploymentDescriptor.java:222)
+	at com.ibm.broker.config.util.ApplyBarOverride.applyOverridesFromFile(ApplyBarOverride.java:282)
+	at com.ibm.broker.config.util.ApplyBarOverride.runCommand(ApplyBarOverride.java:142)
+	at com.ibm.broker.config.util.ApplyBarOverride.execute(ApplyBarOverride.java:472)
+	at com.ibm.broker.config.util.ApplyBarOverride.main(ApplyBarOverride.java:502)
+
+2021-09-28 15:25:42.0928 main........... } com.ibm.broker.config.proxy.DeploymentDescriptor.<init>()
+2021-09-28 15:25:42.0929 main........... { com.ibm.broker.config.proxy.BarFile.applyOverrides(applicationName=PingService, libraryName=null, recursive=false)
+2021-09-28 15:25:42.0929 main...........   { com.ibm.broker.config.proxy.BarFile.getNestedBarFiles(name=PingService, dfts=[Lcom.ibm.broker.config.common.DeployableFileType;@1b2c6ec2)
+2021-09-28 15:25:42.0932 main...........     { com.ibm.broker.config.proxy.BarFile.<init>(parentBarFile=name[../../../../toolkit_v12/GeneratedBarFiles/PingServiceproject.generated.bar];numberOfDeployableEntries[1];deploymentDescriptor[null];, barEntry=nameOfThisBarEntry[PingService.appzip];barEntryBytes.length[5483];modificationTime[Tue Sep 28 16:54:36 CEST 2021];deployableFileType[appzip];numberOfKeyWords[0];)
+2021-09-28 15:25:42.0932 main...........       { com.ibm.broker.config.proxy.BarFile.parseBarFile()
+2021-09-28 15:25:42.0933 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0933 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0933 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0933 main...........           { com.ibm.broker.config.proxy.DeploymentDescriptor.<init>(inputStream=java.io.BufferedInputStream@70177ecd)
+2021-09-28 15:25:42.0937 main...........           } com.ibm.broker.config.proxy.DeploymentDescriptor.<init>()
+2021-09-28 15:25:42.0937 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0937 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0937 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0937 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0938 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0938 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0938 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0939 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0939 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0940 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0940 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0940 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0941 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0941 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0942 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0942 main...........         { com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0943 main...........         } com.ibm.broker.config.proxy.BarFile.parseBarEntry()
+2021-09-28 15:25:42.0943 main...........       } com.ibm.broker.config.proxy.BarFile.parseBarFile()
+2021-09-28 15:25:42.0943 main...........     } com.ibm.broker.config.proxy.BarFile.<init>()
+2021-09-28 15:25:42.0943 main...........   } com.ibm.broker.config.proxy.BarFile.getNestedBarFiles()
+2021-09-28 15:25:42.0943 main...........   { com.ibm.broker.config.proxy.BarFile.applyOverrides(applicationName=PingService, libraryName=null, recursive=false)
+2021-09-28 15:25:42.0943 main...........     { com.ibm.broker.config.proxy.BarFile.applyOverrides(DeploymentDescriptor=com.ibm.broker.config.proxy.DeploymentDescriptor@1e80bfe8)
+2021-09-28 15:25:42.0944 main...........       { com.ibm.broker.config.proxy.DeploymentDescriptor.replacePropertyValue(oldPropertyValue=gen.PingService#ping (Implementation).UDP_FLW_1, newPropertyValue=A new value set)
+2021-09-28 15:25:42.0946 main...........       } com.ibm.broker.config.proxy.DeploymentDescriptor.replacePropertyValue() Replaced 0 occurrences
+2021-09-28 15:25:42.0946 main...........       { com.ibm.broker.config.proxy.DeploymentDescriptor.setOverride(propertyIdentifier=gen.PingService#ping (Implementation).UDP_FLW_1, newPropertyValue=A new value set)
+2021-09-28 15:25:42.0947 main...........         d[2]: The override was replaced.
+2021-09-28 15:25:42.0947 main...........       } com.ibm.broker.config.proxy.DeploymentDescriptor.setOverride()
+2021-09-28 15:25:42.0947 main...........       { com.ibm.broker.config.proxy.BarFile.getDeploymentDescriptorPath()
+2021-09-28 15:25:42.0948 main...........         { com.ibm.broker.config.proxy.BarFile.getResourcePath()
+2021-09-28 15:25:42.0948 main...........         } com.ibm.broker.config.proxy.BarFile.getResourcePath()
+2021-09-28 15:25:42.0948 main...........       } com.ibm.broker.config.proxy.BarFile.getDeploymentDescriptorPath()
+2021-09-28 15:25:42.0948 main...........       { com.ibm.broker.config.proxy.BarFile.addMessageToLog(msgNumber=1140, inserts=gen.PingService#ping (Implementation).UDP_FLW_1<<A new value set<<PingService.appzip/META-INF/broker.xml)
+2021-09-28 15:25:42.0948 main...........         { com.ibm.broker.config.proxy.LogEntry.getLogEntryFromString(encodedData=1140<<<<<<gen.PingService#ping (Implementation).UDP_FLW_1<<A new value set<<PingService.appzip/META-INF/broker.xml)
+2021-09-28 15:25:42.0948 main...........           { com.ibm.broker.config.proxy.LogEntry.getMessageNumber(bipNumber=1140)
+2021-09-28 15:25:42.0948 main...........             { com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue(bipNumber=1140)
+2021-09-28 15:25:42.0948 main...........             } com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue()
+2021-09-28 15:25:42.0949 main...........           } com.ibm.broker.config.proxy.LogEntry.getMessageNumber() retVal=BIP1140I
+2021-09-28 15:25:42.0949 main...........           { com.ibm.broker.config.proxy.LogEntry.getLocalisedMessageDetail(bipNumber=1140, inserts=[gen.PingService#ping (Implementation).UDP_FLW_1, A new value set, PingService.appzip/META-INF/broker.xml])
+2021-09-28 15:25:42.0949 main...........             { com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue(bipNumber=1140)
+2021-09-28 15:25:42.0949 main...........             } com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue()
+2021-09-28 15:25:42.0949 main...........             { com.ibm.broker.config.proxy.LogEntry.insertInserts()
+2021-09-28 15:25:42.0949 main...........             } com.ibm.broker.config.proxy.LogEntry.insertInserts()
+2021-09-28 15:25:42.0950 main...........           } com.ibm.broker.config.proxy.LogEntry.getLocalisedMessageDetail()
+2021-09-28 15:25:42.0950 main...........           { com.ibm.broker.config.proxy.LogEntry.getTimestamp()
+2021-09-28 15:25:42.0950 main...........           } com.ibm.broker.config.proxy.LogEntry.getTimestamp() retVal=null
+2021-09-28 15:25:42.0950 main...........           d[1]: new LogEntry() : {message=BIP1140I, detail=BIP1140I: Overriding property gen.PingService#ping (Implementation).UDP_FLW_1 with 'A new value set' in 'PingService.appzip/META-INF/broker.xml' ..., source=, timestamp=null}
+2021-09-28 15:25:42.0950 main...........           d[1]: new LogEntry() inserts = [gen.PingService#ping (Implementation).UDP_FLW_1, A new value set, PingService.appzip/META-INF/broker.xml]
+2021-09-28 15:25:42.0950 main...........         } com.ibm.broker.config.proxy.LogEntry.getLogEntryFromString()
+2021-09-28 15:25:42.0950 main...........       } com.ibm.broker.config.proxy.BarFile.addMessageToLog()
+2021-09-28 15:25:42.0950 main...........     } com.ibm.broker.config.proxy.BarFile.applyOverrides()
+2021-09-28 15:25:42.0951 main...........   } com.ibm.broker.config.proxy.BarFile.applyOverrides()
+2021-09-28 15:25:42.0951 main........... } com.ibm.broker.config.proxy.BarFile.applyOverrides()
+2021-09-28 15:25:42.0951 main........... { com.ibm.broker.config.proxy.LogEntry.getLogEntryFromString(encodedData=1143<<<<<<../../../../toolkit_v12/GeneratedBarFiles/PingService.bar)
+2021-09-28 15:25:42.0951 main...........   { com.ibm.broker.config.proxy.LogEntry.getMessageNumber(bipNumber=1143)
+2021-09-28 15:25:42.0951 main...........     { com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue(bipNumber=1143)
+2021-09-28 15:25:42.0951 main...........     } com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue()
+2021-09-28 15:25:42.0951 main...........   } com.ibm.broker.config.proxy.LogEntry.getMessageNumber() retVal=BIP1143I
+2021-09-28 15:25:42.0951 main...........   { com.ibm.broker.config.proxy.LogEntry.getLocalisedMessageDetail(bipNumber=1143, inserts=[../../../../toolkit_v12/GeneratedBarFiles/PingService.bar])
+2021-09-28 15:25:42.0951 main...........     { com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue(bipNumber=1143)
+2021-09-28 15:25:42.0951 main...........     } com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue()
+2021-09-28 15:25:42.0952 main...........     { com.ibm.broker.config.proxy.LogEntry.insertInserts()
+2021-09-28 15:25:42.0952 main...........     } com.ibm.broker.config.proxy.LogEntry.insertInserts()
+2021-09-28 15:25:42.0952 main...........   } com.ibm.broker.config.proxy.LogEntry.getLocalisedMessageDetail()
+2021-09-28 15:25:42.0952 main...........   { com.ibm.broker.config.proxy.LogEntry.getTimestamp()
+2021-09-28 15:25:42.0952 main...........   } com.ibm.broker.config.proxy.LogEntry.getTimestamp() retVal=null
+2021-09-28 15:25:42.0952 main...........   d[1]: new LogEntry() : {message=BIP1143I, detail=BIP1143I: Saving Bar file ../../../../toolkit_v12/GeneratedBarFiles/PingService.bar..., source=, timestamp=null}
+2021-09-28 15:25:42.0952 main...........   d[1]: new LogEntry() inserts = [../../../../toolkit_v12/GeneratedBarFiles/PingService.bar]
+2021-09-28 15:25:42.0952 main........... } com.ibm.broker.config.proxy.LogEntry.getLogEntryFromString()
+2021-09-28 15:25:42.0953 main........... { com.ibm.broker.config.proxy.BarFile.saveAs(outputFilename=../../../../toolkit_v12/GeneratedBarFiles/PingService.bar)
+2021-09-28 15:25:42.0954 main...........   { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=META-INF/manifest.mf)
+2021-09-28 15:25:42.0954 main...........     d[2]: nestedBar null
+2021-09-28 15:25:42.0955 main...........     d[2]: Reading/Writing META-INF/manifest.mf...
+2021-09-28 15:25:42.0955 main...........   } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0956 main...........   { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=META-INF/service.log)
+2021-09-28 15:25:42.0956 main...........     d[2]: nestedBar null
+2021-09-28 15:25:42.0956 main...........     d[2]: Reading/Writing META-INF/service.log...
+2021-09-28 15:25:42.0956 main...........   } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0956 main...........   { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=META-INF/user.log)
+2021-09-28 15:25:42.0956 main...........     d[2]: nestedBar null
+2021-09-28 15:25:42.0956 main...........     d[2]: Reading/Writing META-INF/user.log...
+2021-09-28 15:25:42.0957 main...........   } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0957 main...........   { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=META-INF/bar-refresh.links)
+2021-09-28 15:25:42.0957 main...........     d[2]: nestedBar null
+2021-09-28 15:25:42.0957 main...........     d[2]: Reading/Writing META-INF/bar-refresh.links...
+2021-09-28 15:25:42.0957 main...........   } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0957 main...........   { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=PingService.appzip)
+2021-09-28 15:25:42.0958 main...........     d[2]: nestedBar name[null];numberOfDeployableEntries[5];deploymentDescriptor[com.ibm.broker.config.proxy.DeploymentDescriptor@1e80bfe8];parentName[../../../../toolkit_v12/GeneratedBarFiles/PingServiceproject.generated.bar];ourEntryInParent[nameOfThisBarEntry[PingService.appzip];barEntryBytes.length[5483];modificationTime[Tue Sep 28 16:54:36 CEST 2021];deployableFileType[appzip];numberOfKeyWords[0];];cachedNestedBarFiles[0];hasChanged[true];cachedBarFileBytes[5483];
+2021-09-28 15:25:42.0958 main...........     { com.ibm.broker.config.proxy.BarFile.saveInternal()
+2021-09-28 15:25:42.0958 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=META-INF/manifest.mf)
+2021-09-28 15:25:42.0958 main...........         d[2]: Reading/Writing META-INF/manifest.mf...
+2021-09-28 15:25:42.0958 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0958 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=META-INF/broker.xml)
+2021-09-28 15:25:42.0958 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0958 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=META-INF/service.log)
+2021-09-28 15:25:42.0958 main...........         d[2]: Reading/Writing META-INF/service.log...
+2021-09-28 15:25:42.0959 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0959 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=META-INF/user.log)
+2021-09-28 15:25:42.0959 main...........         d[2]: Reading/Writing META-INF/user.log...
+2021-09-28 15:25:42.0959 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0959 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=META-INF/bar-refresh.links)
+2021-09-28 15:25:42.0959 main...........         d[2]: Reading/Writing META-INF/bar-refresh.links...
+2021-09-28 15:25:42.0959 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0959 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=restapi.descriptor)
+2021-09-28 15:25:42.0959 main...........         d[2]: Reading/Writing restapi.descriptor...
+2021-09-28 15:25:42.0959 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0960 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=swagger.json)
+2021-09-28 15:25:42.0960 main...........         d[2]: Reading/Writing swagger.json...
+2021-09-28 15:25:42.0960 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0960 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=gen/PingService.msgflow)
+2021-09-28 15:25:42.0960 main...........         d[2]: Reading/Writing gen/PingService.msgflow...
+2021-09-28 15:25:42.0960 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0960 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=ping_Get_data.esql)
+2021-09-28 15:25:42.0960 main...........         d[2]: Reading/Writing ping_Get_data.esql...
+2021-09-28 15:25:42.0960 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0960 main...........       { com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry(thisZIPEntry=ping.subflow)
+2021-09-28 15:25:42.0961 main...........         d[2]: Reading/Writing ping.subflow...
+2021-09-28 15:25:42.0961 main...........       } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0961 main...........       { com.ibm.broker.config.proxy.BarFile.saveDeploymentDescriptor()
+2021-09-28 15:25:42.0961 main...........         d[2]: Writing new deployment descriptor...
+2021-09-28 15:25:42.0961 main...........         { com.ibm.broker.config.proxy.DeploymentDescriptor.getContents()
+2021-09-28 15:25:42.0973 main...........           d[3]: <Broker>
+<CompiledApplication>
+<ConfigurableProperty uri="startMode"/>
+</CompiledApplication>
+<CompiledMessageFlow name="gen.PingService">
+<ConfigurableProperty override="3" uri="gen.PingService#additionalInstances"/>
+<ConfigurableProperty uri="gen.PingService#notificationThresholdMsgsPerSec"/>
+<ConfigurableProperty uri="gen.PingService#maximumRateMsgsPerSec"/>
+<ConfigurableProperty uri="gen.PingService#processingTimeoutSec"/>
+<ConfigurableProperty uri="gen.PingService#processingTimeoutAction"/>
+<ConfigurableProperty uri="gen.PingService#wlmPolicy"/>
+<ConfigurableProperty uri="gen.PingService#commitCount"/>
+<ConfigurableProperty uri="gen.PingService#commitInterval"/>
+<ConfigurableProperty uri="gen.PingService#coordinatedTransaction"/>
+<ConfigurableProperty uri="gen.PingService#consumerPolicySet"/>
+<ConfigurableProperty uri="gen.PingService#providerPolicySet"/>
+<ConfigurableProperty uri="gen.PingService#consumerPolicySetBindings"/>
+<ConfigurableProperty uri="gen.PingService#providerPolicySetBindings"/>
+<ConfigurableProperty uri="gen.PingService#securityProfileName"/>
+<ConfigurableProperty uri="gen.PingService#monitoringProfile"/>
+<ConfigurableProperty uri="gen.PingService#startMode"/>
+<ConfigurableProperty uri="gen.PingService#startInstancesWhenFlowStarts"/>
+<ConfigurableProperty override="/ace/*" uri="gen.PingService#HTTP Input.URLSpecifier"/>
+<ConfigurableProperty uri="gen.PingService#HTTP Input.useHTTPS"/>
+<ConfigurableProperty uri="gen.PingService#HTTP Input.decompressInputMessage"/>
+<ConfigurableProperty uri="gen.PingService#HTTP Input.timeoutForClient"/>
+<ConfigurableProperty override="HTML" uri="gen.PingService#HTTP Input.faultFormat"/>
+<ConfigurableProperty uri="gen.PingService#HTTP Input.validateMaster"/>
+<ConfigurableProperty uri="gen.PingService#HTTP Input.securityProfileName"/>
+<ConfigurableProperty uri="gen.PingService#HTTP Reply.validateMaster"/>
+<ConfigurableProperty override="A new value set" uri="gen.PingService#ping (Implementation).UDP_FLW_1"/>
+</CompiledMessageFlow>
+<CompiledMessageFlow name="ping" type="subflow">
+<ConfigurableProperty override="UDP FLW 1 value" uri="ping#UDP_FLW_1"/>
+<ConfigurableProperty uri="ping#Get data.dataSource"/>
+<ConfigurableProperty uri="ping#Get data.connectDatasourceBeforeFlowStarts"/>
+<ConfigurableProperty uri="ping#Get data.validateMaster"/>
+</CompiledMessageFlow>
+</Broker>
+2021-09-28 15:25:42.0973 main...........         } com.ibm.broker.config.proxy.DeploymentDescriptor.getContents()
+2021-09-28 15:25:42.0973 main...........       } com.ibm.broker.config.proxy.BarFile.saveDeploymentDescriptor()
+2021-09-28 15:25:42.0973 main...........     } com.ibm.broker.config.proxy.BarFile.saveInternal()
+2021-09-28 15:25:42.0973 main...........     d[2]: Will serialize changed version of PingService.appzip...
+2021-09-28 15:25:42.0973 main...........     d[2]: Reading/Writing PingService.appzip...
+2021-09-28 15:25:42.0974 main...........   } com.ibm.broker.config.proxy.BarFile.copyOrOverrideZIPEntry()
+2021-09-28 15:25:42.0974 main...........   { com.ibm.broker.config.proxy.BarFile.saveDeploymentDescriptor()
+2021-09-28 15:25:42.0974 main...........   } com.ibm.broker.config.proxy.BarFile.saveDeploymentDescriptor()
+2021-09-28 15:25:42.0976 main........... } com.ibm.broker.config.proxy.BarFile.saveAs()
+2021-09-28 15:25:42.0976 main........... { com.ibm.broker.config.proxy.LogEntry.getLogEntryFromString(encodedData=8071<<<<<<)
+2021-09-28 15:25:42.0976 main...........   { com.ibm.broker.config.proxy.LogEntry.getMessageNumber(bipNumber=8071)
+2021-09-28 15:25:42.0976 main...........     { com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue(bipNumber=8071)
+2021-09-28 15:25:42.0976 main...........     } com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue()
+2021-09-28 15:25:42.0976 main...........   } com.ibm.broker.config.proxy.LogEntry.getMessageNumber() retVal=BIP8071I
+2021-09-28 15:25:42.0976 main...........   { com.ibm.broker.config.proxy.LogEntry.getLocalisedMessageDetail(bipNumber=8071, inserts=[])
+2021-09-28 15:25:42.0976 main...........     { com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue(bipNumber=8071)
+2021-09-28 15:25:42.0977 main...........     } com.ibm.broker.config.proxy.LogEntry.getMessageFromCatalogue()
+2021-09-28 15:25:42.0977 main...........     { com.ibm.broker.config.proxy.LogEntry.insertInserts()
+2021-09-28 15:25:42.0977 main...........     } com.ibm.broker.config.proxy.LogEntry.insertInserts()
+2021-09-28 15:25:42.0977 main...........   } com.ibm.broker.config.proxy.LogEntry.getLocalisedMessageDetail()
+2021-09-28 15:25:42.0977 main...........   { com.ibm.broker.config.proxy.LogEntry.getTimestamp()
+2021-09-28 15:25:42.0977 main...........   } com.ibm.broker.config.proxy.LogEntry.getTimestamp() retVal=null
+2021-09-28 15:25:42.0977 main...........   d[1]: new LogEntry() : {message=BIP8071I, detail=BIP8071I: Successful command completion., source=, timestamp=null}
+2021-09-28 15:25:42.0978 main...........   d[1]: new LogEntry() inserts = []
+2021-09-28 15:25:42.0978 main........... } com.ibm.broker.config.proxy.LogEntry.getLogEntryFromString()

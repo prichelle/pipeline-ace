@@ -1,4 +1,4 @@
-DECLARE UDP_FLW_1 EXTERNAL CHARACTER;
+
 
 CREATE COMPUTE MODULE ping_Get_data
 	CREATE FUNCTION Main() RETURNS BOOLEAN
@@ -9,7 +9,6 @@ CREATE COMPUTE MODULE ping_Get_data
     	SET OutputRoot.JSON.Data.Ping.workPath = WorkPath;
     	SET OutputRoot.JSON.Data.Ping.msgFlow = MessageFlowLabel;
     	SET OutputRoot.JSON.Data.Ping.dateTime = CURRENT_TIMESTAMP;
-    	SET OutputRoot.JSON.Data.Ping.UDP.flow = UDP_FLW_1;
 		RETURN TRUE;
 	END;
 END MODULE;
