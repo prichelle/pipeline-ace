@@ -1,8 +1,6 @@
 FROM ibmcom/ace-server:latest
-COPY source/PingService /home/aceuser/PingService
+COPY bars /home/aceuser/bars
 RUN export LICENSE="accept" \
     && source /opt/ibm/ace-11/server/bin/mqsiprofile \
-    && mkdir /home/aceuser/bars \
-    && mqsipackagebar -a bars/PingService.bar -k PingService \
-    && mqsibar -a bars/PingService.bar -w /home/aceuser/ace-server \
-    && chmod -R 777 /home/aceuser/ace-server/run/PingService
+    && mqsibar -a bars/Integration.bar -w /home/aceuser/ace-server \
+    && find /home/aceuser/ace-server/run -type d -exec chmod -R 777 {} \;
