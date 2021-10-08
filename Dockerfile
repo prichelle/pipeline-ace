@@ -3,7 +3,6 @@ COPY bars /home/aceuser/bars
 USER 0
 RUN bash -c "cd /home/aceuser \ 
  && export LICENSE=accept \ 
- && . /opt/ibm/ace-12/server/bin/mqsiprofile \ 
  && mqsibar -a bars/Integration.bar -w /home/aceuser/ace-server \ 
  && chmod -R 777 /home/aceuser/ace-server/run \;" 
 USER aceuser
