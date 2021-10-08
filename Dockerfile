@@ -4,5 +4,5 @@ USER 0
 RUN bash -c "cd /home/aceuser \ 
  && export LICENSE=accept \ 
  && mqsibar -a bars/Integration.bar -w /home/aceuser/ace-server \ 
- && chmod -R 777 /home/aceuser/ace-server/run \;" 
+ && chmod -R 777 /home/aceuser/ace-server/run" 
 USER aceuser
