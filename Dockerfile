@@ -1,6 +1,5 @@
 FROM image-registry.openshift-image-registry.svc:5000/ace/ace-minimal:12.0.1.0-alpine
 COPY bars /home/aceuser/bars
-ENV LICENSE=accept
 USER 0
 RUN bash -c "cd /home/aceuser \ 
  && export LICENSE=accept \ 
