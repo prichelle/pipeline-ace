@@ -4,13 +4,9 @@ metadata:
   name: task-prepare-aceserver
 spec:
   params:
-    - default: ibmcom/ace-server:latest
+    - default: image-registry.openshift-image-registry.svc:5000/ace/ace-minimal:12.0.1.0-alpine
       description: aceserver image
       name: ACE_IMAGE
-      type: string
-    - default: registry.redhat.io/rhel8/buildah
-      description: The location of the buildah builder image.
-      name: BUILDER_IMAGE
       type: string
     - default: ./Dockerfile
       description: Path to the Dockerfile to build.
@@ -46,20 +42,24 @@ spec:
     - name: prepare-bar
       image: $(params.ACE_IMAGE)
       script: |
+        #!/bin/bash
+        export LICENSE="accept"
+        . /opt/ibm/ace-12/server/bin/mqsiprofile
         ls -la
         rm bars/*
-        ls bars
         . ./imgcfg
-        . /opt/ibm/ace-11/server/bin/mqsiprofile
+        echo ">- building bar file for application $aceappname"
         cd source
-        mqsipackagebar -a ../bars/Integration.bar -k PingService
-        if [[ -e "PingService/PingService.properties" ]]
+        mqsipackagebar -a ../bars/Integration.bar -k $aceappname
+        [ $? -ne 0 ] && exit 2
+        if [[ -e "$aceappname/$aceappname.properties" ]]
         then
-          mqsiapplybaroverride -b ../bars/Integration.bar -k PingService -p PingService/PingService.properties -o ../bars/IntegrationOver.bar
+          mqsiapplybaroverride -b ../bars/Integration.bar -k $aceappname -p $aceappname/$aceappname.properties -o ../bars/IntegrationOver.bar
           rm ../bars/Integration.bar
           mv ../bars/IntegrationOver.bar ../bars/Integration.bar
+          echo ">- property set"
+          cat $aceappname/$aceappname.properties
         fi
-        cat PingService/ping_Get_data.esql
         ls ../bars
       securityContext:
         privileged: true
