@@ -3,6 +3,6 @@ COPY bars /home/aceuser/bars
 USER aceuser
 ENV LICENSE=accept
 RUN bash -c "cd /home/aceuser \
-    && . /opt/ibm/ace-12/server/bin/mqsiprofile \
+    && . /etc/profile.d/profile-with-product-java-paths.sh \
     && mqsibar -a bars/Integration.bar -w /home/aceuser/ace-server \
     && find /home/aceuser/ace-server/run -type d -exec chmod -R 777 {} ';'"
