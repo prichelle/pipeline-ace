@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: acecicd-pipeline-build-unittest
+spec:
+  params:
+  - name: namespace
+    default: ace
+    description: name of the namespace to deploy and to build image url
+  resources:
+  - name: git-repo
+    type: git
+  tasks:
+  - name: build-unittest
+    taskRef:
+      name: task-build-unittest
+    resources:
+      inputs:
+      - name: source
+        resource: git-repo
+    params:
+    - name: namespace
+      value: $(params.namespace)

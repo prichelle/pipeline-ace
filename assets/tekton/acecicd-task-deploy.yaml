@@ -16,15 +16,15 @@ spec:
       description: image name
     - name: license
       description: license number
-      default: L-APEH-BPUCJK
+      default: L-KSBM-BZWEAT
     - name: tracing_ns
       default: tracing
       description: namespace where OD is installed
     - name: tracing_enabled
-      default: "true"
+      default: "false"
       description: enable tracing
     - name: ace_version
-      default: 11.0.0.10-r1
+      default: 11.0.0.12-r1
       description: fully qualified ace version
   resources:
     inputs:

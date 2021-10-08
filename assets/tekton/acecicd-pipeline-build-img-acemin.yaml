@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: acecicd-pipeline-build-acemin
+spec:
+  resources:
+  - name: image
+    type: image
+  params:
+  - name: namespace
+    default: ace
+    description: namespace used to publish the integration server
+  tasks:
+  - name: build-aceimg
+    taskRef:
+      name: task-build-aceminimal
+    resources:
+      inputs:
+      - name: image
+        resource: image
+    params:
+    - name: namespace
+      value: $(params.namespace)

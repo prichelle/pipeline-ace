@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><MessageAssembly iib:parser="GENERICROOT" xmlns:iib="http://com.ibm.iib/lt/1.0">
+   <version xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="INTEGER">1</version>
+   <checkpoint>
+      <messageId xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">0035DB58-615C6A00-00000001</messageId>
+      <propagationCount xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="INTEGER">4</propagationCount>
+      <nodeCallDepth xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="INTEGER">5</nodeCallDepth>
+      <timestamp xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="TIMESTAMP">2021-10-05 15:06:40.896211</timestamp>
+      <source>
+         <name xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">postEcho (Implementation)</name>
+         <identifier xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">gen.HelloWorld#FCMComposite_1_5</identifier>
+         <type xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">SubFlowNode</type>
+         <terminal xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">Output_1</terminal>
+         <nodePath>
+            <application xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">HelloWorld</application>
+            <messageFlow xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">gen.HelloWorld</messageFlow>
+            <node xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">postEcho (Implementation)</node>
+         </nodePath>
+         <inputNode xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="BOOLEAN">FALSE</inputNode>
+         <resolved>
+            <name xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">postEcho (Implementation).postEcho#OutTerminal.Output_1</name>
+            <identifier xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">gen.HelloWorld#FCMComposite_1_5.postEcho#OutTerminal.Output_1</identifier>
+            <type xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">OutputNode</type>
+            <terminal xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">out</terminal>
+            <nodePath>
+               <application xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">HelloWorld</application>
+               <messageFlow xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">gen.HelloWorld</messageFlow>
+               <subflow>
+                  <index xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="INTEGER">0</index>
+                  <name xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">postEcho (Implementation)</name>
+               </subflow>
+               <node xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">postEcho (Implementation).postEcho#OutTerminal.Output_1</node>
+            </nodePath>
+         </resolved>
+      </source>
+      <target>
+         <name xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">HTTP Reply</name>
+         <identifier xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">gen.HelloWorld#FCMComposite_1_3</identifier>
+         <type xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">ComIbmWSReplyNode</type>
+         <terminal xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">in</terminal>
+         <nodePath>
+            <application xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">HelloWorld</application>
+            <messageFlow xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">gen.HelloWorld</messageFlow>
+            <node xmlns:iib="http://com.ibm.iib/lt/1.0" iib:valueType="CHARACTER">HTTP Reply</node>
+         </nodePath>
+      </target>
+   </checkpoint>
+   <environment/>
+   <localEnvironment xmlns:iib="http://com.ibm.iib/lt/1.0" iib:parser="MQROOT">
+      <Destination>
+         <HTTP>
+            <RequestIdentifier iib:valueType="BLOB">4556485400000000010000008013fe50f88a350000000000</RequestIdentifier>
+         </HTTP>
+         <RouterList/>
+      </Destination>
+      <HTTP>
+         <Input>
+            <Path>
+               <Segment iib:valueType="CHARACTER">helloworld</Segment>
+               <Segment iib:valueType="CHARACTER">v1</Segment>
+               <Segment iib:valueType="CHARACTER">echo</Segment>
+            </Path>
+         </Input>
+      </HTTP>
+      <REST>
+         <Input>
+            <Method iib:valueType="CHARACTER">POST</Method>
+            <Operation iib:valueType="CHARACTER">postEcho</Operation>
+            <Path iib:valueType="CHARACTER">/helloworld/v1/echo</Path>
+            <URI iib:valueType="CHARACTER">http://sangoku.local:7800/helloworld/v1/echo</URI>
+            <Parameters/>
+         </Input>
+      </REST>
+   </localEnvironment>
+   <exceptionList/>
+   <message xmlns:iib="http://com.ibm.iib/lt/1.0" iib:parser="WSRoot">
+      <Properties iib:parser="WSPROPERTYPARSER">
+         <MessageSet iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <MessageType iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <MessageFormat iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <Encoding iib:valueType="INTEGER">546</Encoding>
+         <CodedCharSetId iib:valueType="INTEGER">1208</CodedCharSetId>
+         <Transactional iib:valueType="BOOLEAN">FALSE</Transactional>
+         <Persistence iib:valueType="BOOLEAN">FALSE</Persistence>
+         <CreationTime iib:valueType="GMTTIMESTAMP">2021-10-05 15:06:40.896211</CreationTime>
+         <ExpirationTime iib:valueType="INTEGER">-1</ExpirationTime>
+         <Priority iib:valueType="INTEGER">0</Priority>
+         <ReplyIdentifier iib:valueType="BLOB">000000000000000000000000000000000000000000000000</ReplyIdentifier>
+         <ReplyProtocol iib:valueType="CHARACTER">SOAP-HTTP</ReplyProtocol>
+         <Topic iib:elementType="0x03000000"/>
+         <ContentType iib:valueType="CHARACTER">application/json</ContentType>
+         <IdentitySourceType iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <IdentitySourceToken iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <IdentitySourcePassword iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <IdentitySourceIssuedBy iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <IdentityMappedType iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <IdentityMappedToken iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <IdentityMappedPassword iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+         <IdentityMappedIssuedBy iib:elementType="0x03000000" iib:valueType="CHARACTER"/>
+      </Properties>
+      <HTTPInputHeader iib:parser="WSINPHDR">
+         <Host iib:valueType="CHARACTER">sangoku.local:7800</Host>
+         <Content-Type iib:valueType="CHARACTER">application/json</Content-Type>
+         <Origin iib:valueType="CHARACTER">http://localhost:7600</Origin>
+         <Accept-Encoding iib:valueType="CHARACTER">gzip, deflate</Accept-Encoding>
+         <Connection iib:valueType="CHARACTER">keep-alive</Connection>
+         <Accept iib:valueType="CHARACTER">application/json</Accept>
+         <User-Agent iib:valueType="CHARACTER">Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15</User-Agent>
+         <Referer iib:valueType="CHARACTER">http://localhost:7600/</Referer>
+         <Content-Length iib:valueType="CHARACTER">51</Content-Length>
+         <Accept-Language iib:valueType="CHARACTER">en-us</Accept-Language>
+         <X-Original-HTTP-Command iib:valueType="CHARACTER">POST http://sangoku.local:7800/helloworld/v1/echo HTTP/1.1</X-Original-HTTP-Command>
+         <X-Server-Name iib:valueType="CHARACTER">sangoku.local</X-Server-Name>
+         <X-Server-Port iib:valueType="CHARACTER">7800</X-Server-Port>
+         <X-Remote-Addr iib:valueType="CHARACTER">192.168.0.215</X-Remote-Addr>
+         <X-Remote-Host iib:valueType="CHARACTER">192.168.0.215</X-Remote-Host>
+         <X-Scheme iib:valueType="CHARACTER">http</X-Scheme>
+      </HTTPInputHeader>
+      <JSON iib:parser="json">
+         <Data>
+            <Echo iib:valueType="CHARACTER">Hello Melvin Graves</Echo>
+         </Data>
+      </JSON>
+   </message>
+</MessageAssembly>

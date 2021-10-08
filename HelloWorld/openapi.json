@@ -1,0 +1,63 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "HelloWorld",
+    "version": "1.0.0",
+    "description": "HelloWorld"
+  },
+  "servers": [
+    {
+      "url": "/helloworld/v1"
+    }
+  ],
+  "paths": {
+    "/echo": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "EchoIn",
+                "type": "object",
+                "required": [
+                  "FirstName",
+                  "LastName"
+                ],
+                "properties": {
+                  "FirstName": {
+                    "type": "string",
+                    "title": "FirstName"
+                  },
+                  "LastName": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "EchoOut",
+                  "type": "object",
+                  "properties": {
+                    "Echo": {
+                      "type": "string"
+                    },
+                    "Version": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Echo Response"
+          }
+        }
+      }
+    }
+  }
+}

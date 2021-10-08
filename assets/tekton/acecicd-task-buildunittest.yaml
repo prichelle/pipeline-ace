@@ -1,0 +1,51 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task-build-unittest
+spec:
+  params:
+    - default: image-registry.openshift-image-registry.svc:5000/ace/ace-mvn:1.0
+      description: The location of the buildah builder image.
+      name: BUILDER_IMAGE
+      type: string
+    - default: ace
+      description: release namespace
+      name: namespace
+      type: string
+  resources:
+    inputs:
+      - name: source
+        type: git
+  steps:
+    - name: compile-run-unittest
+      image: $(params.BUILDER_IMAGE)
+      script: |
+        #!/bin/bash
+        . /opt/ibm/ace-12/server/bin/mqsiprofile
+        export JAVA_HOME=/opt/ibm/ace-12/common/jdk
+        export PATH=/opt/ibm/ace-12/common/jdk/bin:$PATH
+        echo $MQSI_BASE_FILEPATH
+        mkdir maven-out
+        echo ">- compiling Test project"
+        cd HelloWorld_Test
+        /opt/apache-maven-3.6.3/bin/mvn --no-transfer-progress -Dinstall.work.directory=../maven-output install
+        ls -la
+        echo ">- prepare test server"
+        cd ..
+        ls
+        ls maven-out
+        mkdir ACE_UnitTest_Srv
+        mqsicreateworkdir ACE_UnitTest_Srv
+        mkdir ACE_UnitTest_Srv/run/UnitTestProject
+        mkdir ACE_UnitTest_Srv/run/UnitTestProject/resources
+        cp HelloWorld_Test/HelloWorld_UnitTest-maven.jar ACE_UnitTest_Srv/run/UnitTestProject
+        cp HelloWorld_Test/testproject.descriptor ACE_UnitTest_Srv/run/UnitTestProject
+        cp HelloWorld_Test/src/main/resources/* ACE_UnitTest_Srv/run/UnitTestProject/resources
+        cp bars/HelloWorld.bar ACE_UnitTest_Srv/run
+
+        echo ">- running unit test"
+        IntegrationServer --work-dir ACE_UnitTest_Srv --no-nodejs --test-project UnitTestProject --start-msgflows false --http-port-number -1 --admin-rest-api -1
+      securityContext:
+        privileged: true
+      resources: {}
+      workingDir: /workspace/source
