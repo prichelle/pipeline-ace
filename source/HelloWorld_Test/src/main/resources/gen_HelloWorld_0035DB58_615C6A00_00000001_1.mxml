@@ -117,7 +117,7 @@
       </HTTPInputHeader>
       <JSON iib:parser="json">
          <Data>
-            <FirstName iib:valueType="CHARACTER">Piere</FirstName>
+            <FirstName iib:valueType="CHARACTER">Pierre</FirstName>
             <LastName iib:valueType="CHARACTER">Richelle</LastName>
          </Data>
       </JSON>
