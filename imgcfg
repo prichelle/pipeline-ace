@@ -1,4 +1,4 @@
 export imgtag="1.0"
 export imgname="ace-cicd"
 export aceappname="HelloWorld"
-ecport unittestprj="HelloWorld_Test"
+export unittestprj="HelloWorld_Test"
