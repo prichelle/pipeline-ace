@@ -7,7 +7,7 @@
         <namespace kind="supplement" prefix="io" uri="http://www.ibm.com/iib/msl/json"/>
     </namespaces>
     <generation engine="xquery"/>
-    <mappingDeclaration name="postEcho_Mapping">
+    <mappingDeclaration name="postEcho_genEcho">
         <input derivedFrom="MB:JSON_operation_name:postEcho" namespace="http://www.ibm.com/iib/msl/json" path="$var/mb:msg(JSON,assembly,JSON,Properties,LocalEnvironment)" var="ComIbmMessageAssembly_JSON">
             <cast derivedFrom="MB:JSON_operation_request" path="$ComIbmMessageAssembly_JSON/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_postEcho_body" ref="var1"/>
         </input>

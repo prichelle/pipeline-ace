@@ -15,8 +15,8 @@
       <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output_1" location="769,36">
         <translation xmi:type="utility:TranslatableString" key="Output" bundleName="postEcho" pluginId="HelloWorld"/>
       </nodes>
-      <nodes xmi:type="ComIbmMSLMapping.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="288,67" mappingExpression="msl://{default}#postEcho_Mapping">
-        <translation xmi:type="utility:ConstantString" string="Mapping"/>
+      <nodes xmi:type="ComIbmMSLMapping.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="288,67" mappingExpression="msl://{default}#postEcho_genEcho">
+        <translation xmi:type="utility:ConstantString" string="genEcho"/>
       </nodes>
       <nodes xmi:type="ComIbmMSLMapping.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="518,68" mappingExpression="msl://{default}#postEcho_AddVersion">
         <translation xmi:type="utility:ConstantString" string="AddVersion"/>
