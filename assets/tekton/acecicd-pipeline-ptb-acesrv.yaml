@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: acecicd-pipeline-prepare
+  name: acecicd-pack-test-build-acesrv
 spec:
   resources:
   - name: git-repo
@@ -16,9 +16,9 @@ spec:
     default: "1.0"
     description: tag for the ace image that will be build
   tasks:
-  - name: prepare-aceserver
+  - name: ptb-aceserver
     taskRef:
-      name: task-prepare-aceserver
+      name: pack-test-build-aceserver
     resources:
       inputs:
       - name: source

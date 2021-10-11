@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: task-build-unittest
+  name: run-unittest
 spec:
   params:
     - default: image-registry.openshift-image-registry.svc:5000/ace/ace-mvn:1.0
