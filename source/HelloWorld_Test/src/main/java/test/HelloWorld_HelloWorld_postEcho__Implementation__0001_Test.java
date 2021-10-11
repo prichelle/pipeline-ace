@@ -32,7 +32,7 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 
 		// Define the SpyObjectReference
 		SpyObjectReference nodeReference = new SpyObjectReference().application("HelloWorld").messageFlow("gen.HelloWorld")
-				.node("postEcho (Implementation)");
+				.node("postEcho (Implementation)").node("genEcho");
 
 		// Initialise a NodeSpy
 		NodeSpy nodeSpy = new NodeSpy(nodeReference);
@@ -54,13 +54,13 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 		}
 
 		// Call the message flow node with the Message Assembly
-		nodeSpy.evaluate(inputMessageAssembly, true, "Input");
+		nodeSpy.evaluate(inputMessageAssembly, true, "in");
 
 		// Assert the number of times that the node is called
 		assertThat(nodeSpy, nodeCallCountIs(1));
 
 		// Assert the terminal propagate count for the message
-		assertThat(nodeSpy, terminalPropagateCountIs("Output", 1));
+		assertThat(nodeSpy, terminalPropagateCountIs("out", 1));
 
 		/* Compare Output Message 1 at output terminal Output_1 */
 
@@ -69,7 +69,7 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 			TestMessageAssembly expectedMessageAssembly = null;
 
 			// Get the TestMessageAssembly object for the actual propagated message
-			actualMessageAssembly = nodeSpy.propagatedMessageAssembly("Output", 1);
+			actualMessageAssembly = nodeSpy.propagatedMessageAssembly("out", 1);
 
 			// Assert output message body data
 			// Get the TestMessageAssembly object for the expected propagated message
