@@ -42,7 +42,7 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 
 		// Create a Message Assembly from the input data file
 		try {
-			String messageAssemblyPath = "/gen_HelloWorld_0035DB58_615C6A00_00000001_1.mxml";
+			String messageAssemblyPath = "/gen_HelloWorld_genEcho_map_input.mxml";
 			InputStream messageStream = Thread.currentThread().getContextClassLoader()
 					.getResourceAsStream(messageAssemblyPath);
 			if (messageStream == null) {
@@ -76,7 +76,7 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 			expectedMessageAssembly = new TestMessageAssembly();
 
 			// Create a Message Assembly from the expected output mxml resource
-			String messageAssemblyPath = "/gen_HelloWorld_0035DB58_615C6A00_00000001_4.mxml";
+			String messageAssemblyPath = "/gen_HelloWorld_genEcho_map_output.mxml";
 			InputStream messageStream = Thread.currentThread().getContextClassLoader()
 					.getResourceAsStream(messageAssemblyPath);
 			if (messageStream == null) {
