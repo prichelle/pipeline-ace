@@ -28,7 +28,7 @@ You may need to use these as inputs to your mappings.</documentation>
             <input path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/LastName" var="LastName"/>
             <input path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/FirstName" var="FirstName"/>
             <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/Echo"/>
-            <code lang="xpath">fn:concat('Hello ',$FirstName, '-', $LastName)</code>
+            <code lang="xpath">fn:concat('Hello ',$FirstName, ' ', $LastName)</code>
         </expression>
     </mappingDeclaration>
 </mappingRoot>
