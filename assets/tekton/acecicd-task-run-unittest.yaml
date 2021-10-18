@@ -24,24 +24,28 @@ spec:
         . /opt/ibm/ace-12/server/bin/mqsiprofile
         export JAVA_HOME=/opt/ibm/ace-12/common/jdk
         export PATH=/opt/ibm/ace-12/common/jdk/bin:$PATH
-        echo $MQSI_BASE_FILEPATH
+        echo ">- running unit test"
+        echo "MQSI path: $MQSI_BASE_FILEPATH"
+        . ./imgcfg
+
         mkdir maven-out
-        echo ">- compiling Test project"
-        cd HelloWorld_Test
+        echo ">- compiling test project $unittestprj using maven"
+        cd source/$unittestprj
         /opt/apache-maven-3.6.3/bin/mvn --no-transfer-progress -Dinstall.work.directory=../maven-output install
-        ls -la
-        echo ">- prepare test server"
-        cd ..
-        ls
-        ls maven-out
+        echo ">- jar file generated"
+        ls -la *.jar
+        echo ">- prepare test server ACE_UnitTest_Srv"
+        cd ../..
         mkdir ACE_UnitTest_Srv
         mqsicreateworkdir ACE_UnitTest_Srv
         mkdir ACE_UnitTest_Srv/run/UnitTestProject
         mkdir ACE_UnitTest_Srv/run/UnitTestProject/resources
-        cp HelloWorld_Test/HelloWorld_UnitTest-maven.jar ACE_UnitTest_Srv/run/UnitTestProject
-        cp HelloWorld_Test/testproject.descriptor ACE_UnitTest_Srv/run/UnitTestProject
-        cp HelloWorld_Test/src/main/resources/* ACE_UnitTest_Srv/run/UnitTestProject/resources
-        cp bars/HelloWorld.bar ACE_UnitTest_Srv/run
+        echo ">- copying unittest jar, descriptor and resources"
+        cp source/$unittestprj/$unittestprj-maven.jar ACE_UnitTest_Srv/run/UnitTestProject
+        cp source/$unittestprj/testproject.descriptor ACE_UnitTest_Srv/run/UnitTestProject
+        cp source/$unittestprj/src/main/resources/* ACE_UnitTest_Srv/run/UnitTestProject/resources
+        echo ">- copying previous compiled Integration bar file"
+        cp bars/Integration.bar ACE_UnitTest_Srv/run
 
         echo ">- running unit test"
         IntegrationServer --work-dir ACE_UnitTest_Srv --no-nodejs --test-project UnitTestProject --start-msgflows false --http-port-number -1 --admin-rest-api -1

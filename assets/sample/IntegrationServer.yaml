@@ -1,0 +1,27 @@
+apiVersion: appconnect.ibm.com/v1beta1
+kind: IntegrationServer
+metadata:
+  name: ace-cicd-11
+  namespace: ace
+spec:
+  configurations: []
+  designerFlowsOperationMode: disabled
+  license:
+    accept: true
+    license: L-KSBM-BZWEAT
+    use: CloudPakForIntegrationNonProduction
+  pod:
+    containers:
+      runtime:
+        image: image-registry.openshift-image-registry.svc:5000/ace/ace-cicd:1.1
+        imagePullPolicy: Always
+  replicas: 1
+  router:
+    timeout: 120s
+  service:
+    endpointType: http
+  tracing:
+    enabled: false
+    namespace: tracing
+  useCommonServices: true
+  version: 11.0.0.12-r1

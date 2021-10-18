@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: acecicd-pipeline-deploy
+  name: acecicd-deploy
 spec:
   params:
   - name: namespace
@@ -19,7 +19,7 @@ spec:
   tasks:
   - name: deploy-image
     taskRef:
-      name: task-deploy-aceimg
+      name: deploy-aceimg
     resources:
       inputs:
       - name: image

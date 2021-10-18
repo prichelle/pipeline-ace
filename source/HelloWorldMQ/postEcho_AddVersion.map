@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
+    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/openapi.json" var="var1"/>
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var4"/>
+    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/openapi.json" var="var5"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var2"/>
+    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/openapi.json" var="var3"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="io" uri="http://www.ibm.com/iib/msl/json"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="postEcho_AddVersion">
+        <input namespace="http://www.ibm.com/iib/msl/json" path="$var4/mb:msg(JSON,assembly,JSON,Properties)" var="MessageAssembly">
+            <cast derivedFrom="MB:JSON_operation_request" path="$MessageAssembly/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_postEcho_200" ref="var1"/>
+        </input>
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var2/mb:msg(JSON,assembly,JSON,Properties)" var="ComIbmMessageAssembly_JSON1">
+            <cast derivedFrom="MB:JSON_operation_response" path="$ComIbmMessageAssembly_JSON1/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_postEcho_200" ref="var3"/>
+        </output>
+        <move>
+            <input path="$MessageAssembly/Properties"/>
+            <output path="$ComIbmMessageAssembly_JSON1/Properties"/>
+        </move>
+        <move>
+            <input path="$MessageAssembly/JSON/spath('Data',2)/Echo"/>
+            <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/Echo"/>
+        </move>
+        <expression>
+            <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/Version"/>
+            <code lang="xpath">iib:getUserDefinedProperty('UDP_VERSION')</code>
+        </expression>
+    </mappingDeclaration>
+</mappingRoot>

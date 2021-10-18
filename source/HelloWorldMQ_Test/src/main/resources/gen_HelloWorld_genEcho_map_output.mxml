@@ -2,36 +2,25 @@
    <version iib:valueType="INTEGER" xmlns:iib="http://com.ibm.iib/lt/1.0">1</version>
    <checkpoint>
       <messageId iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">0035DB58-615C6A00-00000001</messageId>
-      <propagationCount iib:valueType="INTEGER" xmlns:iib="http://com.ibm.iib/lt/1.0">1</propagationCount>
-      <nodeCallDepth iib:valueType="INTEGER" xmlns:iib="http://com.ibm.iib/lt/1.0">2</nodeCallDepth>
+      <propagationCount iib:valueType="INTEGER" xmlns:iib="http://com.ibm.iib/lt/1.0">4</propagationCount>
+      <nodeCallDepth iib:valueType="INTEGER" xmlns:iib="http://com.ibm.iib/lt/1.0">5</nodeCallDepth>
       <timestamp iib:valueType="TIMESTAMP" xmlns:iib="http://com.ibm.iib/lt/1.0">2021-10-05 15:06:40.896211</timestamp>
       <source>
-         <name iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">postEcho (Label)</name>
-         <identifier iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">gen.HelloWorld#FCMComposite_1_4</identifier>
-         <type iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">ComIbmLabelNode</type>
-         <terminal iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">out</terminal>
-         <nodePath>
-            <application iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">HelloWorld</application>
-            <messageFlow iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">gen.HelloWorld</messageFlow>
-            <node iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">postEcho (Label)</node>
-         </nodePath>
-         <inputNode iib:valueType="BOOLEAN" xmlns:iib="http://com.ibm.iib/lt/1.0">FALSE</inputNode>
-      </source>
-      <target>
          <name iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">postEcho (Implementation)</name>
          <identifier iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">gen.HelloWorld#FCMComposite_1_5</identifier>
          <type iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">SubFlowNode</type>
-         <terminal iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">Input_1</terminal>
+         <terminal iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">Output_1</terminal>
          <nodePath>
             <application iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">HelloWorld</application>
             <messageFlow iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">gen.HelloWorld</messageFlow>
             <node iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">postEcho (Implementation)</node>
          </nodePath>
+         <inputNode iib:valueType="BOOLEAN" xmlns:iib="http://com.ibm.iib/lt/1.0">FALSE</inputNode>
          <resolved>
-            <name iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">postEcho (Implementation).postEcho#InTerminal.Input_1</name>
-            <identifier iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">gen.HelloWorld#FCMComposite_1_5.postEcho#InTerminal.Input_1</identifier>
-            <type iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">InputNode</type>
-            <terminal iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">in</terminal>
+            <name iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">postEcho (Implementation).postEcho#OutTerminal.Output_1</name>
+            <identifier iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">gen.HelloWorld#FCMComposite_1_5.postEcho#OutTerminal.Output_1</identifier>
+            <type iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">OutputNode</type>
+            <terminal iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">out</terminal>
             <nodePath>
                <application iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">HelloWorld</application>
                <messageFlow iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">gen.HelloWorld</messageFlow>
@@ -39,9 +28,20 @@
                   <index iib:valueType="INTEGER" xmlns:iib="http://com.ibm.iib/lt/1.0">0</index>
                   <name iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">postEcho (Implementation)</name>
                </subflow>
-               <node iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">postEcho (Implementation).postEcho#InTerminal.Input_1</node>
+               <node iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">postEcho (Implementation).postEcho#OutTerminal.Output_1</node>
             </nodePath>
          </resolved>
+      </source>
+      <target>
+         <name iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">HTTP Reply</name>
+         <identifier iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">gen.HelloWorld#FCMComposite_1_3</identifier>
+         <type iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">ComIbmWSReplyNode</type>
+         <terminal iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">in</terminal>
+         <nodePath>
+            <application iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">HelloWorld</application>
+            <messageFlow iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">gen.HelloWorld</messageFlow>
+            <node iib:valueType="CHARACTER" xmlns:iib="http://com.ibm.iib/lt/1.0">HTTP Reply</node>
+         </nodePath>
       </target>
    </checkpoint>
    <environment/>
@@ -117,8 +117,7 @@
       </HTTPInputHeader>
       <JSON iib:parser="json">
          <Data>
-            <FirstName iib:valueType="CHARACTER">Agent</FirstName>
-            <LastName iib:valueType="CHARACTER">Smith</LastName>
+            <Echo iib:valueType="CHARACTER">Hello Pierre Richelle</Echo>
          </Data>
       </JSON>
    </message>

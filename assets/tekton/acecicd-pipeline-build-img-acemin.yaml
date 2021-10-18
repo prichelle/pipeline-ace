@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: acecicd-pipeline-build-acemin
+  name: acecicd-build-acemin-img
 spec:
   resources:
   - name: image
@@ -13,7 +13,7 @@ spec:
   tasks:
   - name: build-aceimg
     taskRef:
-      name: task-build-aceminimal
+      name: build-aceminimal
     resources:
       inputs:
       - name: image

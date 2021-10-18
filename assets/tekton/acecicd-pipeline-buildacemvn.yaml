@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: acecicd-pipeline-acemvn
+  name: acecicd-build-acemvn
 spec:
   resources:
   - name: git-repo
@@ -15,7 +15,7 @@ spec:
   tasks:
   - name: prepare-acemvn
     taskRef:
-      name: task-prepare-acemvn
+      name: build-acemvn-img
     resources:
       inputs:
       - name: source

@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: task-prepare-acemvn
+  name: build-acemvn-img
 spec:
   params:
     - default: image-registry.openshift-image-registry.svc:5000/ace/ace-minimal:12.0.1.0-alpine

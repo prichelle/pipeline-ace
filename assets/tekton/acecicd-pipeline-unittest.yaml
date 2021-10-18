@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: acecicd-pipeline-build-unittest
+  name: acecicd-run-unittest
 spec:
   params:
   - name: namespace
@@ -13,7 +13,7 @@ spec:
   tasks:
   - name: build-unittest
     taskRef:
-      name: task-build-unittest
+      name: run-unittest
     resources:
       inputs:
       - name: source

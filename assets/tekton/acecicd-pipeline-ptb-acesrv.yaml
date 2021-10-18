@@ -12,9 +12,6 @@ spec:
   - name: namespace
     default: ace
     description: namespace used to publish the integration server
-  - name: IMGTAG
-    default: "1.0"
-    description: tag for the ace image that will be build
   tasks:
   - name: ptb-aceserver
     taskRef:
@@ -28,5 +25,3 @@ spec:
     params:
     - name: namespace
       value: $(params.namespace)
-    - name: IMGTAG 
-      value: $(params.IMGTAG)

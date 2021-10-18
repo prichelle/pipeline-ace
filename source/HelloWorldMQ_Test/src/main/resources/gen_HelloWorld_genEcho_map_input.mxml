@@ -117,8 +117,8 @@
       </HTTPInputHeader>
       <JSON iib:parser="json">
          <Data>
-            <FirstName iib:valueType="CHARACTER">Agent</FirstName>
-            <LastName iib:valueType="CHARACTER">Smith</LastName>
+            <FirstName iib:valueType="CHARACTER">Pierre</FirstName>
+            <LastName iib:valueType="CHARACTER">Richelle</LastName>
          </Data>
       </JSON>
    </message>

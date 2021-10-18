@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: task-deploy-aceimg
+  name: deploy-aceimg
 spec:
   params:
     - default: ace
@@ -32,7 +32,7 @@ spec:
         type: image
   steps:
     - image: 'quay.io/openshift/origin-cli:latest'
-      name: oc
+      name: create-integrationserver
       resources: {}
       script: |
         ISNAME=$(echo "$(params.integrationServerName)" | tr -d .)
@@ -47,6 +47,7 @@ spec:
            containers:
              runtime:
                image: $(resources.inputs.image.url)/$(params.namespace)/$(params.image_name):$(params.image_tag)
+               imagePullPolicy: Always
           configurations: []
           designerFlowsOperationMode: disabled
           license:

@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: get-config
+spec:
+  results:
+    - name: image_tag
+      description: tag from git acecfg for image
+    - name: image_name
+      description: name from git acecfg for image
+    - name: aceapp_name
+      description: name of the ace application to be used for compilation and unit test
+  resources:
+    inputs:
+      - name: source
+        type: git
+  steps:
+    - image: 'quay.io/openshift/origin-cli:latest'
+      name: get-config
+      resources: {}
+      script: |
+        . ./imgcfg
+        echo ">- using imgcfg to drive pipeline"
+        echo -n $imgname > /tekton/results/image_name
+        echo ">- image name value $imgname"
+        echo -n $imgtag > /tekton/results/image_tag
+        echo ">- image tag value $imgtag"
+        echo -n $aceappname > /tekton/results/aceapp_name
+        echo ">- building Integration bar file for application $aceappname"
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/lib/containers
+          name: varlibcontainers
+      workingDir: /workspace/source
+  volumes:
+    - emptyDir: {}
+      name: varlibcontainers

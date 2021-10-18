@@ -23,14 +23,12 @@ spec:
     - name: namespace
       default: ace
       description: namespace used to build the image url
-    - name: "IMGNAME"
-      description: "image name"
-      default: "ace-cicd"
-      type: string
-    - name: "IMGTAG"
-      description: "image tag"
-      default: "1.0"
-      type: string
+    - name: ACE_APP_NAME
+      description: name of the ace application to build in the git repo
+    - name: IMG_NAME
+      description: name of the image that will be pushed in the registry
+    - name: IMG_TAG
+      description: tag value to used to tag the image that will be pushed.
   results:
     - name: image_tag
       description: tag from git acecfg for image
@@ -54,8 +52,7 @@ spec:
         ls -la
         echo ">- removing existing bar files"
         rm bars/*
-        . ./imgcfg
-        echo ">- using imgcfg to drive pipeline"
+        aceappname=$(params.ACE_APP_NAME)
         echo ">- building Integration bar file for application $aceappname"
         cd source
         mqsipackagebar -a ../bars/Integration.bar -k $aceappname
@@ -70,6 +67,7 @@ spec:
           cat $aceappname/$aceappname.properties
         fi
         ls ../bars
+        
       securityContext:
         privileged: true
       resources: {}
@@ -101,14 +99,20 @@ spec:
         mkdir ACE_UnitTest_Srv/run/UnitTestProject
         mkdir ACE_UnitTest_Srv/run/UnitTestProject/resources
         echo ">- copying unittest jar, descriptor and resources"
-        cp $unittestprj/$unittestprj-maven.jar ACE_UnitTest_Srv/run/UnitTestProject
-        cp $unittestprj/testproject.descriptor ACE_UnitTest_Srv/run/UnitTestProject
-        cp $unittestprj/src/main/resources/* ACE_UnitTest_Srv/run/UnitTestProject/resources
+        cp source/$unittestprj/$unittestprj-maven.jar ACE_UnitTest_Srv/run/UnitTestProject
+        cp source/$unittestprj/testproject.descriptor ACE_UnitTest_Srv/run/UnitTestProject
+        cp source/$unittestprj/src/main/resources/* ACE_UnitTest_Srv/run/UnitTestProject/resources
         echo ">- copying previous compiled Integration bar file"
         cp bars/Integration.bar ACE_UnitTest_Srv/run
 
         echo ">- running unit test"
         IntegrationServer --work-dir ACE_UnitTest_Srv --no-nodejs --test-project UnitTestProject --start-msgflows false --http-port-number -1 --admin-rest-api -1
+      securityContext:
+        privileged: true
+      resources: {}
+      volumeMounts:
+        - mountPath: /var/lib/containers
+          name: varlibcontainers
       workingDir: /workspace/source
     - name: build-push-acesrv
       image: gcr.io/kaniko-project/executor:v0.16.0
@@ -120,9 +124,9 @@ spec:
         - /kaniko/executor
       args:
         - --dockerfile=$(params.DOCKERFILE)
-        - --destination=$(resources.inputs.image.url)/$(params.namespace)/$(params.IMGNAME):$(params.IMGTAG)
+        - --destination=$(resources.inputs.image.url)/$(params.namespace)/$(params.IMG_NAME):$(params.IMG_TAG)
         - --context=.
-        - --build-arg=BASE_IMAGE=$(resources.inputs.image.url)/$(params.namespace)/$(params.IMGNAME):$(params.IMGTAG)
+        - --build-arg=BASE_IMAGE=$(resources.inputs.image.url)/$(params.namespace)/$(params.IMG_NAME):$(params.IMG_TAG)
         - --skip-tls-verify
       securityContext:
         privileged: true

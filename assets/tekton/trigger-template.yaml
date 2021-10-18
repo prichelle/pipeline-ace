@@ -1,7 +1,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
-  name: acecicd-pipeline-trigger
+  name: acecicd-process-git-trigger
 spec:
   resourcetemplates:
   - apiVersion: tekton.dev/v1beta1
@@ -13,7 +13,7 @@ spec:
         tekton.dev/pipeline: acecicd-pipeline
     spec:
       pipelineRef:
-        name: acecicd-pipeline
+        name: acecicd-process-git
       resources:
         - name: git-repo
           resourceRef:
@@ -30,9 +30,9 @@ metadata:
 spec:
   serviceAccountName: pipeline
   triggers:
-  - name: acecicd-pipeline-trigger
+  - name: acecicd-process-git-trigger
     template:
-      name: acecicd-pipeline-trigger
+      name: acecicd-process-git-trigger
 ---
 apiVersion: route.openshift.io/v1
 kind: Route

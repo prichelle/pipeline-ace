@@ -117,7 +117,7 @@
       </HTTPInputHeader>
       <JSON iib:parser="json">
          <Data>
-            <Echo iib:valueType="CHARACTER">Hello Pierre Richelle</Echo>
+            <Echo iib:valueType="CHARACTER">Hello Agent Smith</Echo>
          </Data>
       </JSON>
    </message>
