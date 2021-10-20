@@ -21,7 +21,7 @@ spec:
       default: tracing
       description: namespace where OD is installed
     - name: tracing_enabled
-      default: "false"
+      default: "true"
       description: enable tracing
     - name: ace_version
       default: 11.0.0.12-r1

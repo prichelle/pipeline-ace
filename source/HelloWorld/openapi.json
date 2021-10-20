@@ -17,44 +17,47 @@
           "content": {
             "application/json": {
               "schema": {
-                "title": "EchoIn",
-                "type": "object",
-                "required": [
-                  "FirstName",
-                  "LastName"
-                ],
-                "properties": {
-                  "FirstName": {
-                    "type": "string",
-                    "title": "FirstName"
-                  },
-                  "LastName": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/EchoIn"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Echo Out",
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "EchoOut",
-                  "type": "object",
-                  "properties": {
-                    "Echo": {
-                      "type": "string"
-                    },
-                    "Version": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/EchoOut"
                 }
               }
-            },
-            "description": "Echo Response"
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EchoIn": {
+        "type": "object",
+        "properties": {
+          "FirstName": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          }
+        }
+      },
+      "EchoOut": {
+        "type": "object",
+        "properties": {
+          "Echo": {
+            "type": "string"
+          },
+          "Version": {
+            "type": "string"
           }
         }
       }
