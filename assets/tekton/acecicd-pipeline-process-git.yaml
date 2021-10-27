@@ -58,3 +58,7 @@ spec:
       value: $(tasks.1-get-git-config.results.image_name)
     - name: image_tag
       value: $(tasks.1-get-git-config.results.image_tag)
+    - name: ace_version
+      value: '12.0'
+    - name: license
+      value: L-APEH-C49KZH
