@@ -1,4 +1,4 @@
-FROM cp.icr.io/cp/appc/ace-server-prod@sha256:8c7a80be06567e1e535913ba4ea160000b586b1d3ff632cdad92d7aa1ee23bf6
+FROM icr.io/appc-dev/ace-server@sha256:c58fc5a0975314e6a8e72f2780163af38465e6123e3902c118d8e24e798b7b01
 COPY bars /home/aceuser/bars
 USER 0
 RUN bash -c "cd /home/aceuser \ 
