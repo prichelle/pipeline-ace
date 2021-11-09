@@ -34,7 +34,7 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 		SpyObjectReference nodeReference = new SpyObjectReference().application("HelloWorld").messageFlow("gen.HelloWorld")
 				.node("postEcho (Implementation)").node("genEcho");
 
-		// Initialise a NodeSpy
+		// Initialise a NodeSpy 
 		NodeSpy nodeSpy = new NodeSpy(nodeReference);
 
 		// Declare a new TestMessageAssembly object for the message being sent into the node
