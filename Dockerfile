@@ -4,6 +4,7 @@ USER 0
 RUN bash -c "cd /home/aceuser \ 
  && export LICENSE=accept \ 
  && chmod 777 bars/Integration.bar \ 
+ && mkdir -p bars/001 \ 
  && cp bars/Integration.bar /home/aceuser/ace-server/run \ 
  && ls -la /home/aceuser/ace-server/run"
 USER aceuser
