@@ -77,7 +77,7 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 			TestMessageAssembly expectedMessageAssembly = null;
 
 			// Get the TestMessageAssembly object for the actual propagated message
-			actualMessageAssembly = nodeSpy.propagatedMessageAssembly("out", 1);
+			actualMessageAssembly = nodeSpy.propagatedMessageAssembly("out", 1); 
 
 			// Assert output message body data
 			// Get the TestMessageAssembly object for the expected propagated message
