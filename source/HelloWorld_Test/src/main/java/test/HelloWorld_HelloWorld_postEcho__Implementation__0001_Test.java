@@ -67,7 +67,7 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 		// ####### Checks that there is ONE OUTPUT from the mapping node #######
 		// -----------
 		// Assert the terminal propagate count for the message
-		assertThat(nodeSpy, terminalPropagateCountIs("out", 1));
+		assertThat(nodeSpy, terminalPropagateCountIs("out", 1)); 
 		// -----------
 
 		/* Compare Output Message 1 at output terminal Output_1 */
