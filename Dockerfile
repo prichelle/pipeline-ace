@@ -3,9 +3,8 @@ COPY bars /home/aceuser/bars
 USER 0
 RUN bash -c "cd /home/aceuser \ 
  && export LICENSE=accept \ 
- && chmod 777 bars/Integration.bar" 
-RUN ls -la bars
-RUN bash -c "mqsibar -a bars/Integration.bar -w /home/aceuser/ace-server \ 
+ && chmod 777 bars/Integration.bar \ 
+ && mqsibar -a bars/Integration.bar -w /home/aceuser/ace-server \ 
  && chmod -R 777 /home/aceuser/ace-server/run \ 
  && ls -la /home/aceuser/ace-server/run"
 RUN ls -la /home/aceuser/ace-server/run
