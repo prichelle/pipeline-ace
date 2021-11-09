@@ -46,7 +46,7 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 			// ####### Provides the INPUT MESSAGE for the MAPPING NODE #######
 			// -----------
 			String messageAssemblyPath = "/gen_HelloWorld_genEcho_map_input.mxml";
-			// -----------
+			// ----------- 
 			
 			InputStream messageStream = Thread.currentThread().getContextClassLoader()
 					.getResourceAsStream(messageAssemblyPath);
