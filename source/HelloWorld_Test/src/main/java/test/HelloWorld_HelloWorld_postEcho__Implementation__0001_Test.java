@@ -65,7 +65,7 @@ public class HelloWorld_HelloWorld_postEcho__Implementation__0001_Test {
 		// Assert the terminal propagate count for the message
 		assertThat(nodeSpy, terminalPropagateCountIs("out", 1)); 
 		// -----------
-
+ 
 		try {
 			TestMessageAssembly actualMessageAssembly = null;
 			TestMessageAssembly expectedMessageAssembly = null;
