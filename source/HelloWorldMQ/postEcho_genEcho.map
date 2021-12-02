@@ -30,5 +30,8 @@ You may need to use these as inputs to your mappings.</documentation>
             <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/Echo"/>
             <code lang="xpath">fn:concat('Hello ',$FirstName, ' ', $LastName)</code>
         </expression>
+        <assign value="1.0">
+            <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/Version"/>
+        </assign>
     </mappingDeclaration>
 </mappingRoot>

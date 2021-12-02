@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0" xmlns:map="default">
+    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/openapi.json" var="var1"/>
+    <input path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var4"/>
+    <input derivedFrom="MB:JSON_schema_in_swagger_document" path="/openapi.json" var="var5"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var2"/>
+    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/openapi.json" var="var3"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="io" uri="http://www.ibm.com/iib/msl/json"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="postEcho_genMessage">
+        <input namespace="http://www.ibm.com/iib/msl/json" path="$var4/mb:msg(JSON,assembly,JSON,LocalEnvironment,Properties)" var="MessageAssembly">
+            <cast derivedFrom="MB:JSON_operation_request" path="$MessageAssembly/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_postEcho_200" ref="var1"/>
+        </input>
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var2/mb:msg(JSON,assembly,JSON,LocalEnvironment,Properties,MQMD)" var="ComIbmMessageAssembly_JSON1">
+            <cast derivedFrom="MB:JSON_operation_response" path="$ComIbmMessageAssembly_JSON1/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}object_postEcho_200" ref="var3"/>
+        </output>
+        <move>
+            <input path="$MessageAssembly/Properties"/>
+            <output path="$ComIbmMessageAssembly_JSON1/Properties"/>
+        </move>
+        <move>
+            <input path="$MessageAssembly/JSON/spath('Data',2)/Echo"/>
+            <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/Echo"/>
+        </move>
+        <move>
+            <input path="$MessageAssembly/JSON/spath('Data',2)/Version"/>
+            <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/Version"/>
+        </move>
+        <move>
+            <input path="$MessageAssembly/LocalEnvironment"/>
+            <output path="$ComIbmMessageAssembly_JSON1/LocalEnvironment"/>
+        </move>
+        <expression>
+            <input path="$MessageAssembly/LocalEnvironment/WrittenDestination/MQ/DestinationData/queueName" var="queueName1"/>
+            <input path="$MessageAssembly/LocalEnvironment/WrittenDestination/MQ/DestinationData/msgId" var="msgId1"/>
+            <input path="$MessageAssembly/LocalEnvironment/WrittenDestination/MQ/DestinationData" var="DestinationData"/>
+            <output path="$ComIbmMessageAssembly_JSON1/JSON/spath('Data',2)/Message"/>
+            <code lang="xpath">fn:concat('message put on queue: ',$queueName1, '@', $DestinationData/destinationQueueManager , ' with message id: ', $msgId1)</code>
+        </expression>
+    </mappingDeclaration>
+</mappingRoot>

@@ -49,6 +49,9 @@
                     },
                     "Version": {
                       "type": "string"
+                    },
+                    "Message": {
+                      "type": "string"
                     }
                   }
                 }
