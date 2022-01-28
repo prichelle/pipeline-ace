@@ -4,7 +4,7 @@ metadata:
   name: pack-test-build-aceserver
 spec:
   params:
-    - default: image-registry.openshift-image-registry.svc:5000/ace/ace-minimal:12.0.1.0-alpine
+    - default: image-registry.openshift-image-registry.svc:5000/ace/ace-minimal:12.0.2
       description: aceserver image
       name: ACE_IMAGE
       type: string
@@ -24,11 +24,17 @@ spec:
       default: ace
       description: namespace used to build the image url
     - name: ACE_APP_NAME
-      description: name of the ace application to build in the git repo
+      description: name of the ace application to build in the git repo.
+      default: HelloWorld
+      type: string
     - name: IMG_NAME
       description: name of the image that will be pushed in the registry
+      default: ace-helloword
+      type: string
     - name: IMG_TAG
       description: tag value to used to tag the image that will be pushed.
+      default: "1.0"
+      type: string
   results:
     - name: image_tag
       description: tag from git acecfg for image
@@ -120,6 +126,8 @@ spec:
       env:
         - name: "DOCKER_CONFIG"
           value: "/tekton/home/.docker/"
+        - name: "SSL_CERT_DIR"
+          value: "/tmp/other-ssl-dir"
       command:
         - /kaniko/executor
       args:

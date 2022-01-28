@@ -4,7 +4,7 @@ metadata:
   name: build-acemvn-img
 spec:
   params:
-    - default: image-registry.openshift-image-registry.svc:5000/ace/ace-minimal:12.0.2
+    - default: image-registry.openshift-image-registry.svc:5000/ace/ace-minimal:12.0.1.0-alpine
       description: aceserver image
       name: ACE_IMAGE
       type: string
@@ -49,6 +49,8 @@ spec:
         - --context=.
         - --build-arg=BASE_IMAGE=$(params.ACE_IMAGE)
         - --skip-tls-verify
+      securityContext:
+        privileged: true
       volumeMounts:
         - mountPath: /var/lib/containers
           name: varlibcontainers

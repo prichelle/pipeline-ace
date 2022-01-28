@@ -8,7 +8,7 @@ spec:
     default: ace
     description: name of the namespace to deploy and to build image url
   - name: image_name
-    default: ace-demo
+    default: ace-helloword
     description: name of the image in the registry
   - name: image_tag
     default: '1.0'
