@@ -1,4 +1,4 @@
-export imgtag="1.1"
+export imgtag="1.0"
 export imgname="ace-helloworld"
 export aceappname="HelloWorld"
 export unittestprj="HelloWorld_Test"
