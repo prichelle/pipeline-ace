@@ -1,16 +1,20 @@
-apiVersion: triggers.tekton.dev/v1alpha1
+apiVersion: triggers.tekton.dev/v1beta1
 kind: TriggerTemplate
 metadata:
   name: acecicd-process-git-trigger
+  labels:
+    app.kubernetes.io/name: ace-cicd
+    app.kubernetes.io/component: trigger
 spec:
   resourcetemplates:
-  - apiVersion: tekton.dev/v1beta1
+  - apiVersion: tekton.dev/v1
     kind: PipelineRun
     metadata:
       generateName: acecicd-pipeline-run-
       namespace: ace
       labels:
         tekton.dev/pipeline: acecicd-pipeline
+        app.kubernetes.io/name: ace-cicd
     spec:
       pipelineRef:
         name: acecicd-process-git
@@ -23,16 +27,18 @@ spec:
             name: acecicd-res-image
       serviceAccountName: pipeline
 ---
-apiVersion: triggers.tekton.dev/v1alpha1
+apiVersion: triggers.tekton.dev/v1beta1
 kind: EventListener
 metadata:
   name: acecicd-listener
+  labels:
+    app.kubernetes.io/name: ace-cicd
+    app.kubernetes.io/component: eventlistener
 spec:
   serviceAccountName: pipeline
   triggers:
   - name: acecicd-process-git-trigger
-    template:
-      name: acecicd-process-git-trigger
+    triggerRef: acecicd-process-git-trigger
 ---
 apiVersion: route.openshift.io/v1
 kind: Route

@@ -1,7 +1,10 @@
-apiVersion: tekton.dev/v1beta1
+apiVersion: tekton.dev/v1
 kind: Task
 metadata:
   name: deploy-aceimg
+  labels:
+    app.kubernetes.io/name: ace-cicd
+    app.kubernetes.io/component: deploy
 spec:
   params:
     - default: ace
@@ -35,19 +38,33 @@ spec:
       name: create-integrationserver
       resources: {}
       script: |
-        ISNAME=$(echo "$(params.integrationServerName)" | tr -d .)
+        #!/bin/bash
+        set -e  # Exit on error
+
+        # Sanitize integration server name (remove dots)
+        ISNAME=$(echo "$(params.integrationServerName)" | tr -d '.')
+
+        echo "==> Deploying IntegrationServer: $ISNAME"
+        echo "==> Namespace: $(params.namespace)"
+        echo "==> Image: $(resources.inputs.image.url)/$(params.namespace)/$(params.image_name):$(params.image_tag)"
+
+        # Generate IntegrationServer custom resource
         cat << EOF > integrationserver.yaml
         apiVersion: appconnect.ibm.com/v1beta1
         kind: IntegrationServer
         metadata:
           name: $ISNAME
           namespace: $(params.namespace)
+          labels:
+            app: ace
+            app.kubernetes.io/name: $ISNAME
+            app.kubernetes.io/managed-by: tekton
         spec:
           pod:
-           containers:
-             runtime:
-               image: $(resources.inputs.image.url)/$(params.namespace)/$(params.image_name):$(params.image_tag)
-               imagePullPolicy: Always
+            containers:
+              runtime:
+                image: $(resources.inputs.image.url)/$(params.namespace)/$(params.image_name):$(params.image_tag)
+                imagePullPolicy: Always
           configurations: []
           designerFlowsOperationMode: disabled
           createDashboardUsers: true
@@ -67,5 +84,16 @@ spec:
             namespace: $(params.tracing_ns)
           version: $(params.ace_version)
         EOF
+
+        echo "==> Generated IntegrationServer manifest:"
         cat integrationserver.yaml
+
+        echo "==> Applying IntegrationServer CR"
         oc apply -f integrationserver.yaml
+
+        echo "==> Waiting for IntegrationServer to be ready (max 5 minutes)"
+        oc wait --for=condition=Ready integrationserver/$ISNAME \
+          -n $(params.namespace) --timeout=300s || true
+
+        echo "==> Deployment status:"
+        oc get integrationserver/$ISNAME -n $(params.namespace)

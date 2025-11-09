@@ -1,97 +1,202 @@
-# ACE DevOps
+# ACE DevOps Pipeline
 
-This repo can be used as example to implement an automatic deployment of an AppConnect integration server where the Cloud Pak for Integration is installed.
-The deployment is using Tekton pipeline.
-It is possible to modify the deployment such that it might be possible to deploy without the CP4I. 
+This repository provides an automated CI/CD solution for deploying IBM App Connect Enterprise (ACE) integration servers using Tekton pipelines on OpenShift/Kubernetes with Cloud Pak for Integration.
 
-A trigger template is provided to trigger the pipeline using a git webhook.
-The pipeline build an ace image using a **DockerFile**, publish the custom image in the openshift registry and then deploy the ace integration server into the cluster.
+## Table of Contents
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Repository Structure](#repository-structure)
+- [Workflow](#workflow)
+- [Installation](#installation)
+  - [Building ACE Minimal Image](#building-ace-minimal-image)
+  - [Building ACE Maven Image](#building-ace-maven-image)
+- [AppConnect Build Pipeline](#appconnect-build-pipeline)
+- [AppConnect Deploy Pipeline](#appconnect-deploy-pipeline)
+- [Automation with Webhooks](#automation-with-webhooks)
+- [Running the Complete Pipeline](#running-the-complete-pipeline)
+- [Troubleshooting](#troubleshooting)
+- [Useful Commands](#useful-commands)
 
-The deployment on the openshift cluster is done using AppConnect operator.
+## Overview
 
-Two types of build is provided as example:
-  - build from a ACE toolkit project (the default DockerFile). 
-    In this approach, a bar file is generated from the ACE project and 
-  - build from a ACE bar file
+This project demonstrates automated deployment of ACE integration servers using:
+- **Tekton Pipelines** for CI/CD orchestration
+- **AppConnect Operator** for deployment management
+- **OpenShift Container Registry** for image storage
+- **Git webhooks** for automated triggering
 
-The pipeline is trigerred by a git event which triggers the build of ACE e
+### Key Features
+- Automated build and deployment of ACE integration servers
+- Support for two build approaches:
+  - Build from ACE toolkit project (generates BAR file from source)
+  - Build from pre-existing ACE BAR file
+- Minimal ACE image for efficient testing and building
+- Unit testing integration with Maven
+- Git webhook-based pipeline triggering
+- OpenShift/CP4I integration with operational dashboard support
 
-In order to minimise the size of the ACE image for building and testing the ACE flows, a minimal ace image is built and use use in the Tekton pipeline.
-The building of this image is also done using a tekton pipeline and the git repo "https://github.com/tdolby-at-uk-ibm-com/ace-docker".
+### Build Types
+The pipeline supports two types of builds:
+1. **Toolkit Project Build** (default): Generates a BAR file from ACE project sources
+2. **BAR File Build**: Uses pre-existing BAR files from the `bars/` directory
 
-# Repo content
-The repo contains the resources to install the Tekton pipeline and to build the custom ace image.
-  - Assets: this folder contains the resources to setup the pipeline
-  - bars: this folder can be used to place the bar file to be installed on the integration server. One tekton task is using this folder of the git repo to deploy bars. 
-  - source: this folder contains an example of an ACE application integration source (from the toolkit folder). The source is build by a tekton pipeline and packaged as a bar file. The bar is ultimately deployed on a IntegrationServer.
+### Architecture
+The pipeline is triggered by Git events and executes the following:
+1. Clone the Git repository
+2. Build custom ACE image using Dockerfile
+3. Push image to OpenShift registry
+4. Deploy IntegrationServer CR using AppConnect Operator
 
-# Workflow
-The automatic deployment workflow is:
-  - A git push is performed into the git repo
-  - A webhook triggers the Tekton pipeline
-  - The pipeline initiates the build
-    - The git repo from branch main is cloned
-    - The Dockerfile is used to build the ace image. The name of the image is composed from the imgcfg file
-    - The image is pushed to the openshift registry
-  - The pipeline initiates the deploy
-    - An integration server CR is created based on the imgcfg input
+To minimize image size for building and testing, a minimal ACE base image is built using a separate Tekton pipeline based on [ace-docker](https://github.com/tdolby-at-uk-ibm-com/ace-docker).
 
-# Installation
+## Prerequisites
 
-The Tekton pipeline is setup using the k8s resources available in the git assets folder.
+Before setting up the pipeline, ensure you have:
 
-The resources are installed on the openshift cluster using  
+### Required Components
+- **OpenShift/Kubernetes Cluster** (v4.8+)
+- **AppConnect Operator** - Creates and manages IntegrationServer custom resources
+- **Tekton Operator** (OpenShift Pipelines Operator)
+- **Cloud Pak for Integration** (CP4I) - For license management, common services, and operational dashboard
+  - For non-CP4I Kubernetes environments, modify the IntegrationServer CR in the deploy task
+- **Git Repository** - For source code and webhook integration
+
+### Required Images
+The following images must be built before running the main pipeline:
+1. **ACE Minimal Image** - Base image for efficient building and testing
+2. **ACE Maven Image** - Built on top of minimal image, used for Java-based unit testing
+
+### Access Requirements
+- Cluster admin access or appropriate RBAC permissions
+- OpenShift CLI (`oc`) installed and configured
+- Access to OpenShift internal registry
+
+## Repository Structure
+
+```
+pipeline-ace/
+├── assets/           # Tekton pipeline resources and configurations
+│   ├── tekton/      # Main pipeline, task, and resource definitions
+│   ├── sample/      # Sample configurations and examples
+│   └── docker/      # Additional Dockerfiles
+├── bars/            # Directory for pre-built BAR files
+├── source/          # ACE application source code (toolkit projects)
+├── Dockerfile       # Main Dockerfile for building ACE server image
+├── DockerFileMvn    # Dockerfile for Maven-based unit testing
+├── DockerFile_aceminimal  # Dockerfile for minimal ACE image
+└── imgcfg          # Configuration file for image name, tag, and app settings
+```
+
+### Directory Details
+- **assets/tekton**: Contains all Tekton pipeline, task, and resource YAML files
+- **bars/**: Place pre-built BAR files here for BAR-based deployments
+- **source/**: Contains ACE application source code from toolkit workspace. Built by pipeline and packaged as BAR file for deployment
+
+## Workflow
+
+### Automated Deployment Process
+1. **Git Push**: Developer pushes code changes to the Git repository
+2. **Webhook Trigger**: Git webhook triggers the Tekton pipeline
+3. **Build Phase**:
+   - Clone Git repository (main branch)
+   - Build ACE image using Dockerfile
+   - Image name and tag are read from `imgcfg` file
+   - Push image to OpenShift registry
+4. **Deploy Phase**:
+   - Create IntegrationServer custom resource (CR)
+   - AppConnect Operator deploys the integration server
+   - Server is registered with operational dashboard (if enabled)
+
+## Installation
+
+The Tekton pipeline is configured using Kubernetes resources in the `assets/tekton` folder.
+
+### Basic Installation
+Resources are installed on the OpenShift cluster using:
 
 ```shell
 oc create -f <resource.yaml>
 ```
 
-## Prerequisites
-- A kubernetes cluster with AppConnect Operator installed. The operator will create the required k8s objects based on the integrationserver CR defined by the deploy task. 
-- The Tekton operator (OpenShift pipeline operator)
-- Cloud Pak for Integration. The current deploy task creates an IntegrationServer CR that expects to have the Cloud Pak for Integration installed (license type, common services, operational dashboard). For kubernetes environment without the CP4I, the deploy task needs to be modified by changing the  IntegrationServer custom resource.
-- The ACE minimal image needs to be build before starting the main tekton pipeline. This minimal image is used to build the maven image that is in turn used to build the unit test that is part of the deployment.
+Or apply all resources at once:
+```shell
+oc apply -f assets/tekton/
+```
 
-### Building ace minimal
-The image is build using the git repository "https://github.com/tdolby-at-uk-ibm-com/ace-docker".  
-The docker file used to build the image is located at this repo under "experimental/ace-minimal/Dockerfile.alpine".
+### Grant Privileged Access
 
-A copy of the Dockerfile is provided in this repo (file DockerFile_aceminimal).
+The pipeline requires privileged access to create directories in the Git workspace:
 
-To run this pipeline:
-- Create the task "build_aceminimal": ``` oc create -f acecicd-task-build-aceminimal.yaml ```
-- Create the pipeline "acecicd-build-acemin-img": ``` oc create -f acecicd-pipeline-build-img-acemin.yaml ```
-- Create the image resource "image" which is used to define the openshift registry location where the image will be pushed: ``` oc create -f acecicd-res-image.yaml ```
-- Run the pipeline using the UI 
+```shell
+oc adm policy add-scc-to-user privileged -n <yourNamespace> -z pipeline
+```
 
-The current implementation of the pipeline is using the external git repo.  
-The pipeline task is defining an ACE developer image url to build the custom minimal ace image. It might be possible that the version is not synchronized with the one defined in the git repo. For instance some scripts has the ACE version in their path and might lead to error.  
-The option to provide the image url is provided as example to enhanced the deployment.  
+### Building ACE Minimal Image
 
-### Building the ACE maven 
+The minimal image is built using the repository [ace-docker](https://github.com/tdolby-at-uk-ibm-com/ace-docker). The Dockerfile is located at `experimental/ace-minimal/Dockerfile.alpine` in that repository.
 
-The unit test project is based on java and need to be compiled in order to be run.  
-The project is build using Maven and is downloading the binaries from apache archive. Please check the Docker file.
+A copy of the Dockerfile is provided in this repo as `DockerFile_aceminimal`.
 
-The last version of ACE provides the ability to build the unit test project using ibmint command line (not yet tested and will be an enhancement in this git project).  
-The image is built using the Docker file DockerFileMvn provided in this repo and the ace minimal image that has been built in the previous section.  
+#### Steps to Build ACE Minimal Image:
 
+1. Create the build task:
+   ```shell
+   oc create -f assets/tekton/acecicd-task-build-aceminimal.yaml
+   ```
 
-To run this pipeline:
-- Create the task "build-acemvn-img": ``` oc create -f acecicd-task-buildacemvn.yaml ```
-- Create the pipeline "acecicd-build-acemvn": ``` oc create -f acecicd-pipeline-buildacemvn.yaml ```
-- Create the resource git: ``` oc create -f acecicd-res-git.yaml ```
-- Create the image resource "image", if not already done, which is used to define the openshift registry location where the image will be pushed: ``` oc create -f acecicd-res-image.yaml ```
-- Run the pipeline using the UI 
+2. Create the pipeline:
+   ```shell
+   oc create -f assets/tekton/acecicd-pipeline-build-img-acemin.yaml
+   ```
 
-# AppConnect build image pipeline
+3. Create the image resource (defines OpenShift registry location):
+   ```shell
+   oc create -f assets/tekton/acecicd-res-image.yaml
+   ```
 
-This pipeline creates a new custom ACE image that will contains an ACE Integration Server configured with the resources available in the git "source" folder. This image can then be deployed directly in the cluster.  
+4. Run the pipeline using the OpenShift UI or CLI
 
-This part explains how to run the AppConnect pipeline it self.  
-The pipeline is building the App Connect source from the source folder provided in the repository.  
+**Note**: The pipeline uses an external Git repository. The ACE developer image URL is configured in the task. Ensure version synchronization with the external repo, as scripts may include ACE version in their paths.
 
-The pipeline is provided in the yaml file "acecicd-pipeline-ptb-acesrv". The structure of the pipeline is as follow:
+### Building ACE Maven Image
+
+Unit test projects are Java-based and require Maven for compilation. The image is built using `DockerFileMvn` and depends on the ACE minimal image built in the previous step.
+
+The Maven binaries are downloaded from Apache archive during the build.
+
+**Future Enhancement**: Newer ACE versions support building unit test projects using `ibmint` command line (not yet implemented).
+
+#### Steps to Build ACE Maven Image:
+
+1. Create the build task:
+   ```shell
+   oc create -f assets/tekton/acecicd-task-buildacemvn.yaml
+   ```
+
+2. Create the pipeline:
+   ```shell
+   oc create -f assets/tekton/acecicd-pipeline-buildacemvn.yaml
+   ```
+
+3. Create the Git resource:
+   ```shell
+   oc create -f assets/tekton/acecicd-res-git.yaml
+   ```
+
+4. Create the image resource (if not already created):
+   ```shell
+   oc create -f assets/tekton/acecicd-res-image.yaml
+   ```
+
+5. Run the pipeline using the OpenShift UI
+
+## AppConnect Build Pipeline
+
+This pipeline creates a custom ACE image containing an IntegrationServer configured with resources from the `source` folder. The image can then be deployed directly to the cluster.
+
+The pipeline builds App Connect source from the `source` folder in the repository.
+
+### Pipeline Structure
 
 ```
 (pipeline) acecicd-pack-test-build-acesrv [acecicd-pipeline-ptb-acesrv.yaml]
@@ -99,206 +204,332 @@ The pipeline is provided in the yaml file "acecicd-pipeline-ptb-acesrv". The str
     |-> (step) prepare-bar
     |-> (step) run-unittest
     |-> (step) build-push-acesrv
-
 ```
 
-The pipeline requires the git and image resources. The git to get the source and the image to be able to push the image built.  
+The pipeline requires Git and image resources to retrieve source code and push the built image.
 
-## Resources
+### Resources Configuration
 
-**GIT**  
-The resource is defined in the file "acecicd-res-git.yaml" and is used to define the git repository location.
+#### Git Resource
+Defined in `acecicd-res-git.yaml` - specifies the Git repository location.
 
-You should clone this repository and add your own source code in the source directory. Those are just the project folder available under the toolkit workspace.  
+**Important**: Clone this repository and add your own source code in the `source` directory. Use project folders from your toolkit workspace.
 
-```diff
-+ You need to update the git url $(params.url) according to your repository url.
-```
+**Action Required**: Update the `$(params.url)` in the Git resource to point to your repository URL.
 
-**IMAGE**
+#### Image Resource
+Defined in `acecicd-res-image.yaml` - specifies the registry location for pushing and pulling images.
 
-The image resource is defined in the file "acecicd-res-image.yaml".
-The resource is used to define the registry location where the image that will be build will be pushed and pulled.  
-The default value is "image-registry.openshift-image-registry.svc:5000" which is the standard registry url for an openshift cluster.  
+Default value: `image-registry.openshift-image-registry.svc:5000` (standard OpenShift registry URL)
 
-## task
-This task 
-The steps defined in the task "pack-test-build-aceserver" are described here after.  
+### Task Steps
 
-### prepare-bar
+#### 1. prepare-bar
+Prepares the BAR file for unit testing and image creation. Uses the minimal ACE image.
 
-This step is preparing the bar file that will be used to perform the unit test and create the ace image.  The image used to run this step is the minimal ace image.  
+**Process:**
+- Clones the Git repository
+- Uses `mqsipackagebar` to create the BAR file
+- Applies property overrides using `mqsiapplybaroverride` (if property file exists)
 
-The step just clone the git repo and uses the mqsipackage to create the bar file and the command mqsiapplybaroverride is called if a property file is provided.  
+**Property File**: Place a properties file named `<application_name>.properties` in the application folder (e.g., `HelloWorld/HelloWorld.properties`). An example is provided in the HelloWorld app.
 
-The property file should be placed under the application folder (here for the example is "HelloWorld" and should be called "<application_name>.properties").
-An example is provided here under the HelloWorld app.  
+#### 2. run-unittest
+Runs unit tests. The unit test project name is defined in the `unittestprj` variable in the `imgcfg` file.
 
-### run-unittest  
-This step is running the unit test. The name of the unit test is provided by the unittestprj variable defined in the imgcfg file.
+**Note**: Unit test libraries have dependencies defined in the POM file. Some libraries are from the App Connect installation, which includes the AppConnect version in the path. If you change versions, you may need to update the POM file.
 
-The UnitTest has librairies dependencies defined in the POM file. Some of these library are provided by the app connect library. 
-The AppConnect installation path includes the appconnect version, which means that if you change the version you might need to adapt the POM file.
-### build-push-acesrv
-This step will build the ACE custom image. 
-it uses as default the docker file "DockerFile".   
+#### 3. build-push-acesrv
+Builds the custom ACE image using the default `Dockerfile`.
 
-I encountered issues with the image build with Kaniko. Please refers to the topic Troubleshooting at the end.
-## Install the pipeline & run
+**Note**: Issues have been encountered with Kaniko. Refer to the [Troubleshooting](#troubleshooting) section.
 
-- create the resources with the res-git and res-img yaml file
-- create the pipeline "acecicd-pipeline-ptb-acesrv.yaml"
-- create the task ``` oc apply -f acecicd-task-ptb-acesrv.yaml ```
+### Installation and Execution
 
-The pipeline requires priviledge access to create the directory in the git workspace.
+1. Create the resources:
+   ```shell
+   oc create -f assets/tekton/acecicd-res-git.yaml
+   oc create -f assets/tekton/acecicd-res-image.yaml
+   ```
 
-The following command has been issued to add the priviledge access to the pipeline service account:  
+2. Create the pipeline:
+   ```shell
+   oc create -f assets/tekton/acecicd-pipeline-ptb-acesrv.yaml
+   ```
+
+3. Create the task:
+   ```shell
+   oc apply -f assets/tekton/acecicd-task-ptb-acesrv.yaml
+   ```
+
+4. Run the pipeline from the OpenShift UI
+
+## AppConnect Deploy Pipeline
+
+This pipeline deploys the custom image built by the build pipeline.
+
+Configuration is provided in `acecicd-task-deploy.yaml`. Required properties can be configured at the pipeline level.
+
+### Default Configuration Values
+
+You may need to change these according to your environment:
+- **Tracing**: Enabled by default with operational dashboard namespace set to `tracing`
+- **License**: `L-APEH-C49KZH` (CP4I non-production for ACE 12.0.1-12.0.2)
+  - See [License annotations](https://www.ibm.com/docs/en/app-connect/containers_cd?topic=resources-licensing-reference-app-connect-operator) for details
+
+The namespace, image name, and tag are configured from the `imgcfg` file.
+
+### Important Notes
+- The IntegrationServer version must be fully qualified
+- The base image is `ibmcom/ace-server:latest`, designed for use with AppConnect Operator
+
+### Installation and Execution
+
+1. Create the deploy task:
+   ```shell
+   oc apply -f assets/tekton/acecicd-task-deploy.yaml
+   ```
+
+2. Create the deploy pipeline:
+   ```shell
+   oc apply -f assets/tekton/acecicd-pipeline-deploy.yaml
+   ```
+
+3. Create the image resource (if not already created):
+   ```shell
+   oc create -f assets/tekton/acecicd-res-image.yaml
+   ```
+
+4. Start the pipeline using the OpenShift UI
+
+### Validation
+
+Verify the IntegrationServer deployment:
 
 ```shell
-
-oc adm policy add-scc-to-user privileged -n <yourNameSpace> -z pipeline
+oc get integrationserver
 ```
 
-
-# AppConnect deploy image pipeline
-
-This pipeline is used to deploy the custom image that has been built by the build image pipeline.  
-
-
-Configuration provided by the file "acecicd-task-deploy.yaml".
-The required properties can be configured at the pipeline level.
-
-Default values that you might change according to your needs:
-  - tracing is activated (operational dashboard integration ) with the operational dashboard installation namespace set to "tracing". It can be overwritten in the pipeline or by setting default value
-  - license number is set to : L-APEH-C49KZH (you might need to adapt this license based on your deployment). This corresponds to a CP4I non production for ACE 12.0.1-12.0.2.
-
-  Licensing information can be found here: [License annotations](https://www.ibm.com/docs/en/app-connect/containers_cd?topic=resources-licensing-reference-app-connect-operator)
-
-The namespace parameter can be configured at the pipeline level. 
-The image name and tag is provided by the task build from the imgcfg file. 
-
-Please note the following for the integration server custom resource that is created:
-- The version used to run the integration serveer has to be fully qualified
-- The image used to build the custom image is __ibmcom/ace-server:latest__ which is made for use with **AppConnect Operator**
-
-## Install & start
-
-- Create the task "deplay-aceimg": ```oc apply -f acecicd-task-deploy.yaml```
-- Create the pipeline "acecicd-deploy": ```oc apply -f acecicd-pipeline-deploy.yaml```
-- Create the resource image if not already done
-- Start the pipeline using the UI.
-
-You can validate that the integration server has been correctly deployed using:
-
+Expected output:
 ```
-oc get integrationserver                                                                                                               1.584s  (main|✚?) 10:15
-NAME                           RESOLVEDVERSION   REPLICAS   AVAILABLEREPLICAS   CUSTOMIMAGES   STATUS   AGE
-ace-helloword-10               12.0.2.0-r1       1          1                   true           Ready    10m
+NAME                  RESOLVEDVERSION   REPLICAS   AVAILABLEREPLICAS   CUSTOMIMAGES   STATUS   AGE
+ace-helloword-10      12.0.2.0-r1       1          1                   true           Ready    10m
 ```
 
-# Automating the deployment using trigger
-The pipeline can be triggered using a github webhook.
-The trigger configuration is provided by the file **trigger-template.yaml**.
+## Automation with Webhooks
 
+The pipeline can be triggered automatically using a GitHub webhook. The trigger configuration is provided in `trigger-template.yaml`.
 
-The following k8s objects are used to automate the deployment:
-  - **EventListener** (acecicd-listener): this is a pod that is used by the pipeline to receive the github webhook and to launch the pipeline through the configuration provided in the trigger. 
-  - **TiggreTemplate** (acecicd-pipeline-trigger): this defines what pipeline to run by creating a "pipelineRun" with a name starting with "acecicd-pipeline-run-" and referencing the pipeline "acecicd-pipeline".
-  - **Route** (acecicd-webhook): this will create a route that can be used to configure the github webghook. The url generated by the route exposes the event listener.
-## Install
+### Components
 
-1. The required objects for the triggering are provided in trigger-template.yaml file.
+The following Kubernetes objects automate the deployment:
 
+1. **EventListener** (`acecicd-listener`): Pod that receives GitHub webhooks and launches the pipeline
+2. **TriggerTemplate** (`acecicd-pipeline-trigger`): Defines which pipeline to run by creating a PipelineRun with name prefix `acecicd-pipeline-run-`
+3. **Route** (`acecicd-webhook`): Exposes the EventListener via a public URL for GitHub webhook configuration
+
+### Installation
+
+1. Apply the trigger resources:
+   ```shell
+   oc apply -f assets/tekton/trigger-template.yaml
+   ```
+
+   **Important**: Update the namespace in the TriggerTemplate to match your environment.
+
+2. Get the webhook URL:
+   ```shell
+   oc get route acecicd-webhook
+   ```
+
+   The route exposes an HTTP URL that can be used to configure the GitHub webhook.
+
+3. Install the process-git pipeline:
+   ```shell
+   oc apply -f assets/tekton/acecicd-pipeline-process-git.yaml
+   ```
+
+4. Install the get-config task:
+   ```shell
+   oc apply -f assets/tekton/acecicd-task-get-config.yaml
+   ```
+
+The pipeline clones the Git repository and uses the `get-config` task to set environment variables from the `imgcfg` file.
+
+## Running the Complete Pipeline
+
+### Setup Steps
+
+1. **Clone the repository**:
+   ```shell
+   git clone <your-repo-url>
+   cd pipeline-ace
+   ```
+
+2. **Create the GitHub webhook**:
+   - Get the webhook URL: `oc get route acecicd-webhook`
+   - Configure the webhook in your GitHub repository settings
+
+3. **Add your integration server project**:
+   - Copy your integration server project directory (from toolkit workspace) to the `source/` folder
+   - Or use the provided example (`PingService`)
+
+4. **Update the Dockerfile**:
+   - Replace `PingService` with your project directory name
+
+5. **Configure the imgcfg file**:
+   - Set the desired image name and tag
+   - Set the ACE application name
+   - Set the unit test project name (if applicable)
+
+6. **Push changes to Git**:
+   ```shell
+   git add .
+   git commit -m "Configure pipeline for my project"
+   git push
+   ```
+
+7. **Pipeline executes automatically**:
+   - The webhook triggers the pipeline
+   - Build and deploy processes run automatically
+   - The ACE server registers with the dashboard (if enabled)
+
+8. **Test the deployment**:
+   - Navigate to the REST API endpoint
+   - Perform an HTTP GET request
+
+## Sample Alternative: Buildah
+
+An alternative example using Buildah for image building is provided in `assets/sample/tekton/`.
+
+### Key Differences
+- Uses `registry.redhat.io/rhel8/buildah` as the builder image
+- Default Dockerfile is `DockerFile` (can be overridden with DOCKERFILE parameter)
+- Image URL format: `<image-pipeline-resource>/<namespace>/<imgcfg-name>:<imgcfg-version>`
+- Image name and version are computed from the `imgcfg` file in the repository root
+
+### Task Results
+The task generates two results from the `imgcfg` file:
+- `image_tag`: Tag for the image
+- `image_name`: Name of the image
+
+These results are used by subsequent tasks to compose the full image URL.
+
+## Troubleshooting
+
+### Build Image Issues with Kaniko
+
+#### SSL Certificate Problems
+
+Tekton changed how certificates are injected. The certificate volume mount path changed from `/etc/config-registry-cert/` to `/etc/ssl/certs`. Since Tekton mounts a read-only volume, this can cause build failures.
+
+**Error Message:**
 ```
-oc apply -f trigger-template.yaml
+Unpacking rootfs as cmd COPY bars /home/aceuser/initial-config/bars requires it.
+error building image: error building stage: failed to get filesystem from image:
+error removing ./etc/ssl/certs to make way for new symlink:
+unlinkat /etc/ssl/certs/service-ca.crt: device or resource busy
 ```
 
-```diff
-+ You need to set the right namespace in the triggertemplate.
-```
+**Solution:**
 
-The route provides an URL that can be called to trigger the pipeline. This URL can be used to configure the git repo webhook.
-
-The cp4i hostname exposed by the route can be retrieved using 
-``` 
-oc get route | grep webhook
-```
-The route is exposed using http.
-
-2. The pipeline to process the git request is provided with process-git.
-
-The pipeline clone the git repo and use the task **get-config** to set environment variable using the **imgcfg** file.
-- Install the process-git pipeline:
-  ```
-   oc apply -f acecicd-pipeline-process-git.yaml
-  ```
-- Install the task get-config: 
-  ```
-  oc apply -f acecicd-task-get-config.yaml
-  ```
-# Run the whole pipeline
-
-- Clone the git repository 
-- Create the webhook in github using the generated url from the route.
-  ```
-  oc get route acecicd-webhook
-  ```
-- Copy your integration server project (directory with the content of your toolkit project) into the git source directory (or use the provided one "PingService")  
-- Change the DockerFile according to your project directory that you have copied. Replace PingService by the name of your project directory
-- Adapt the **imgcfg** file to reflect the image name and tag that you would like to use.
-- Push your update to git
-- Pipeline is triggered
-- When the ace server has been started, it should be registered in the dashboard.
-- Navigate to the REST API and performs a http get
-
-
-# Sample
-
-
-Another example is provided where buildah is used to build the image. The example is provided under "/assets/sample/tekton".  
-
-The image used to run the container is __registry.redhat.io/rhel8/buildah__.
-
-By default **DockerFile** is used but it can be override using the DOKERFILE parameter.
-
-The build image url used to push the generated image is __image-pipeline-reesource/namespace/imgcfg-name:imgcfg-version__ and it is pushed to the registry.
- - The image name and version used for the registry url are computed from the **imgcfg** file available in the git root directory (same level as the docker file).
-
-The tasks is generating two *results* from the **imgcfg** file. These results are used by the next tag to recompose the image url.
-  - image_tag 
-  - image_version
-# Troubleshooting
-
-## Build images
-I had different issues with Kaniko.   
-
-### SSL issues
-
- Tekton changed the way certificates are injected and the cert volume is mounted. 
- It used to have /etc/config-registry-cert/ as a mountPath, where the updated version uses /etc/ssl/certs. 
- Since Tekton mounts a read-only volume, it fails to build the image with the following error:
-
- ```
- Unpacking rootfs as cmd COPY bars /home/aceuser/initial-config/bars requires it. 
-error building image: error building stage: failed to get filesystem from image: error removing ./etc/ssl/certs to make way for new symlink: unlinkat /etc/ssl/certs/service-ca.crt: device or resource busy
- ```  
-
-To solve the isssue, I followed the recommendation at [Kaniko issues](https://github.com/GoogleContainerTools/kaniko/issues/1692) and created the following step withe the **SSL_CERT_DIR** env variable:
+Set the `SSL_CERT_DIR` environment variable in your build step:
 
 ```yaml
-   - name: build-push-acesrv
-      image: gcr.io/kaniko-project/executor:v0.16.0
-      # specifying DOCKER_CONFIG is required to allow kaniko to detect docker credential
-      env:
-        - name: "DOCKER_CONFIG"
-          value: "/tekton/home/.docker/"
-        - name: "SSL_CERT_DIR"
-          value: "/tmp/other-ssl-dir"
+- name: build-push-acesrv
+  image: gcr.io/kaniko-project/executor:v0.16.0
+  env:
+    - name: "DOCKER_CONFIG"
+      value: "/tekton/home/.docker/"
+    - name: "SSL_CERT_DIR"
+      value: "/tmp/other-ssl-dir"
 ```
 
-Other reference:
-[Tekton bugzilla](https://bugzilla.redhat.com/show_bug.cgi?id=1973677)
+**References:**
+- [Kaniko Issue #1692](https://github.com/GoogleContainerTools/kaniko/issues/1692)
+- [Tekton Bugzilla](https://bugzilla.redhat.com/show_bug.cgi?id=1973677)
 
-# Useful command line
+### Common Issues
 
-``` oc delete pipelinerun --all -n ace ```
+#### Version Mismatch
+If you encounter errors related to missing files or incorrect paths, check that ACE versions are consistent across:
+- Base images
+- POM file dependencies
+- Pipeline task configurations
+
+#### Permission Denied
+Ensure the pipeline service account has privileged access:
+```shell
+oc adm policy add-scc-to-user privileged -n <yourNamespace> -z pipeline
+```
+
+#### Image Pull Errors
+Verify that:
+- The image resource URL is correct
+- The OpenShift registry is accessible
+- Service accounts have pull/push permissions
+
+## Useful Commands
+
+### Clean Up Pipeline Runs
+```shell
+oc delete pipelinerun --all -n ace
+```
+
+### View Pipeline Logs
+```shell
+oc logs -f <pod-name> -n ace
+```
+
+### Check Integration Server Status
+```shell
+oc get integrationserver -n ace
+```
+
+### View Pipeline Resources
+```shell
+oc get pipeline,pipelinerun,task,taskrun -n ace
+```
+
+### Debug a Failed Pod
+```shell
+oc describe pod <pod-name> -n ace
+oc logs <pod-name> -n ace
+```
+
+### Get Webhook URL
+```shell
+oc get route acecicd-webhook -n ace -o jsonpath='{.spec.host}'
+```
+
+## Configuration File Reference
+
+### imgcfg File
+The `imgcfg` file contains key configuration variables:
+
+```bash
+export imgtag="1.1"              # Image tag version
+export imgname="ace-helloworld"  # Image name
+export aceappname="HelloWorld"   # ACE application name
+export unittestprj="HelloWorld_Test"  # Unit test project name
+```
+
+Update these values according to your project requirements.
+
+## License
+
+Refer to the IBM App Connect Enterprise licensing documentation for proper license configuration in your environment.
+
+## Contributing
+
+Contributions are welcome! Please ensure:
+- YAML files are properly formatted
+- Documentation is updated for new features
+- Testing is performed in a non-production environment first
+
+## Support
+
+For issues and questions:
+- Check the [Troubleshooting](#troubleshooting) section
+- Review IBM App Connect Enterprise documentation
+- Consult Tekton Pipelines documentation

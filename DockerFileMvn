@@ -1,29 +1,41 @@
 # Copyright (c) 2020 Open Technologies for Integration
 # Licensed under the MIT license (see LICENSE for details)
+
+# ACE Maven Build Image
+# This image contains Maven tooling for building and testing ACE Java-based unit tests
+
 ARG BASE_IMAGE=ibmcom/ace-server:latest
 FROM $BASE_IMAGE
 
-#
-# This image is run by Travis in a CI container, and is pulled each time.
-#
-# Starting from ace-minimal (which has the ACE install plus the aceuser created), 
-# this image contains only the parts needed for the build and unit test phase.
-#
+LABEL maintainer="prichelle@be.ibm.com" \
+      description="ACE server with Maven for unit testing" \
+      version="1.0"
 
-LABEL "maintainer"="prichelle@be.ibm.com"
 USER root
 
 # For dev pipeline use we can accept the ACE license automatically
-ENV LICENSE accept
+ENV LICENSE=accept
 
-# The standard Maven packages on most distros bring a lot of extra packages with
-# them so we install Maven directly. 
+# Install Maven directly to avoid unnecessary dependencies
+# Using newer Maven version (3.9.6) for better performance and security
+ENV MAVEN_VERSION=3.9.6
+ENV MAVEN_HOME=/opt/apache-maven-${MAVEN_VERSION}
+
 RUN cd /opt && \
-    curl -k https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz | tar -xzf - && \
-    ln -s /opt/apache-maven-3.6.3/bin/mvn /usr/local/bin/mvn
+    # Use --fail to error on HTTP errors, remove -k for security
+    curl -fsSL https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+        -o maven.tar.gz && \
+    tar -xzf maven.tar.gz && \
+    rm maven.tar.gz && \
+    ln -s ${MAVEN_HOME}/bin/mvn /usr/local/bin/mvn && \
+    # Verify Maven installation
+    mvn --version
 
+# Set timezone
 ENV TZ=Europe/Brussels
-WORKDIR /
+
+# Set working directory
+WORKDIR /workspace
 
 # Default command to run
 ENTRYPOINT []
