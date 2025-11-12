@@ -1,4 +1,19 @@
-export imgtag="1.1"
-export imgname="ace-helloworld"
-export aceappname="HelloWorld"
-export unittestprj="HelloWorld_Test"
+#!/bin/bash
+# ACE Image Configuration
+# This file contains configuration variables for the ACE CI/CD pipeline
+# Used by Tekton tasks to build and deploy ACE integration servers
+
+# Image version tag (semantic versioning recommended: MAJOR.MINOR.PATCH)
+imgtag="1.1"
+
+# Image name (will be used in registry URL)
+imgname="ace-helloworld"
+
+# ACE application name (must match directory name in source/ folder)
+aceappname="HelloWorld"
+
+# Unit test project name (must match test project directory in source/ folder)
+unittestprj="HelloWorld_Test"
+
+# Export variables for use in shell scripts
+export imgtag imgname aceappname unittestprj
